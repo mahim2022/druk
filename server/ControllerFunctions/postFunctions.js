@@ -1,5 +1,6 @@
-import { Bar } from "../SchemaModel/RestaurantsSchema";
-const mongoose = require("mongoose");
+import { Bar } from "../SchemaModel/RestaurantsSchema.js";
+import mongoose from "mongoose";
+// const mongoose = require("mongoose");
 
 export const getPosts = async (req, res) => {
 	try {
@@ -10,7 +11,7 @@ export const getPosts = async (req, res) => {
 	}
 };
 
-export const createMenu = async (req, res) => {
+export const createBar = async (req, res) => {
 	const post = req.body;
 	const newPost = new Bar({ ...post });
 	try {
