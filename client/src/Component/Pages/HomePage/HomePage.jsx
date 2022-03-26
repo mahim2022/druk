@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { FoodCarousel } from "../../Carousel/Carousel";
+import "./Homepage.css";
 
 const Item = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -28,16 +29,52 @@ export const HomePage = () => {
 			</Container>
 			{/* Card Menu */}
 			<Container maxWidth="sm">
-				<Box sx={{ flexGrow: 1 }} style={{ marginTop: "30px" }}>
+				<Box sx={{ flexGrow: 1 }} style={{ marginTop: "15px" }}>
 					<Grid container spacing={2}>
 						<Grid item xs={12}>
-							<Item>xs=8</Item>
+							<Item className="firstCard">
+								<span
+									style={{
+										color: "white",
+										fontStyle: "italic",
+										fontWeight: "bolder",
+									}}
+								>
+									Drinks Delivery
+								</span>
+							</Item>
 						</Grid>
 						<Grid item xs={6}>
-							<Item>xs=4</Item>
+							<Item className="shop"></Item>
 						</Grid>
 						<Grid item xs={6}>
-							<Item>xs=8</Item>
+							<Item className="pickUp">
+								<div>
+									<span
+										style={{
+											color: "white",
+											fontStyle: "italic",
+											fontWeight: "bolder",
+											position: "relative",
+											bottom: "5px",
+										}}
+									>
+										Pick-Ups,
+									</span>
+									<br></br>
+									<span
+										style={{
+											color: "white",
+											fontStyle: "italic",
+											fontWeight: "bolder",
+											position: "relative",
+											bottom: "5px",
+										}}
+									>
+										Get upto 30% off!!
+									</span>
+								</div>
+							</Item>
 						</Grid>
 					</Grid>
 				</Box>

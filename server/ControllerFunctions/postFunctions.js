@@ -1,5 +1,6 @@
 import { Bar } from "../SchemaModel/RestaurantsSchema.js";
 import mongoose from "mongoose";
+import { BarMenu } from "../SchemaModel/MenuSchema.js";
 // const mongoose = require("mongoose");
 
 export const getPosts = async (req, res) => {
@@ -8,6 +9,15 @@ export const getPosts = async (req, res) => {
 		res.status(200).json(post);
 	} catch (error) {
 		res.status(400).json(error);
+	}
+};
+
+export const getMenu = async (req, res) => {
+	try {
+		const post = await BarMenu.find();
+		res.status(201).json(post);
+	} catch (error) {
+		console.log(error);
 	}
 };
 

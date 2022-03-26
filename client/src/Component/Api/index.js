@@ -11,3 +11,7 @@ export const fetchPost = () => {
 export const createBar = (data) => {
 	return Api.post("/post", data);
 };
+
+export const fetchMenu = () => {
+	return Api.get("/post/menu");
+};

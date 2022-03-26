@@ -1,5 +1,7 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { Paper } from "@mui/material";
+import "./Carousel.css";
 
 export const FoodCarousel = () => {
 	const responsive = {
@@ -18,7 +20,8 @@ export const FoodCarousel = () => {
 		},
 		mobile: {
 			breakpoint: { max: 464, min: 0 },
-			items: 1,
+			items: 4,
+			// slidesToSlide: 2,
 		},
 	};
 	return (
@@ -30,7 +33,7 @@ export const FoodCarousel = () => {
 			// ssr={true} // means to render carousel on server-side.
 			infinite={true}
 			autoPlay={true}
-			autoPlaySpeed={1000}
+			autoPlaySpeed={2000}
 			keyBoardControl={true}
 			customTransition="all .5"
 			transitionDuration={500}
@@ -40,10 +43,18 @@ export const FoodCarousel = () => {
 			// dotListClass="custom-dot-list-style"
 			itemClass="carousel-item-padding-40-px"
 		>
-			<div>Item 1</div>
-			<div>Item 2</div>
-			<div>Item 3</div>
-			<div>Item 4</div>
+			<div>
+				<Paper elevation={12} className="jD"></Paper>
+			</div>
+			<div>
+				<Paper elevation={12} className="jD"></Paper>
+			</div>
+			<div>
+				<Paper elevation={12} className="jD"></Paper>
+			</div>
+			<div>
+				<Paper elevation={12} className="jD"></Paper>
+			</div>
 		</Carousel>
 	);
 };

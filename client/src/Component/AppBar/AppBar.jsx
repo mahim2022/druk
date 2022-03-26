@@ -11,6 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+import { fetchMenu, fetchPost } from "../Api";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -32,6 +33,12 @@ const ResponsiveAppBar = () => {
 
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
+	};
+
+	const onSubmit = async (e) => {
+		e.preventDefault();
+		const { data } = await fetchMenu();
+		console.log(data);
 	};
 
 	return (
@@ -88,6 +95,7 @@ const ResponsiveAppBar = () => {
 						noWrap
 						component="div"
 						sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
+						onClick={(e) => onSubmit(e)}
 					>
 						LOGO
 					</Typography>
