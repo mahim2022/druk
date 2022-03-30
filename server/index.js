@@ -30,11 +30,13 @@ app.get("/", (req, res) => {
 
 mongoose
 	.connect(
-		"mongodb+srv://mahim:9pyT5QgNRdKRLRLf@cluster0.tpcgh.mongodb.net/Cluster0?retryWrites=true&w=majority"
+		"mongodb+srv://mahim:BSKsAhjHSB3DLRkW@Cluster0.tpcgh.mongodb.net/Druk?retryWrites=true&w=majority"
 	)
 	.then(() =>
 		app.listen(port, () => {
 			console.log(`Example app listening on port ${port}`);
 		})
 	)
-	.catch((error) => console.log(error));
+	.catch((error) =>
+		console.log(`Mongo db is disconnected with error=>{${error}}`)
+	);

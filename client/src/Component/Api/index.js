@@ -7,11 +7,3 @@ const Api = axios.create({ baseURL: "http://localhost:5000" });
 export const fetchPost = () => {
 	return Api.get("/post");
 };
-
-export const createBar = (data) => {
-	return Api.post("/post", data);
-};
-
-export const fetchMenu = () => {
-	return Api.get("/post/menu");
-};
