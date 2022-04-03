@@ -1,42 +1,59 @@
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
 import * as React from "react";
-import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { useState } from "react";
-import { createBar, fetchPost } from "../Api";
-import axios from "axios";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { Container, TextField } from "@mui/material";
 
-export const Form = () => {
-	const [data, setdata] = useState({ barName: "" });
+const style = {
+	position: "absolute",
+	top: "50%",
+	left: "50%",
+	transform: "translate(-50%, -50%)",
+	width: 400,
+	bgcolor: "background.paper",
+	border: "2px solid #000",
+	boxShadow: 24,
+	p: 4,
+};
 
-	const onSubmit = async (e) => {
-		e.preventDefault();
-		const result = await fetchPost();
-		console.log(result);
-	};
+export default function FormModal() {
+	const [open, setOpen] = React.useState(false);
+	const handleOpen = () => setOpen(true);
+	const handleClose = () => setOpen(false);
 
 	return (
-		<Box
-			component="form"
-			sx={{
-				"& > :not(style)": { m: 1, width: "25ch" },
-			}}
-			noValidate
-			autoComplete="off"
-		>
-			<TextField
-				id="outlined-basic"
-				label="Outlined"
-				variant="outlined"
-				value={data.barName}
-				onChange={(e) => {
-					setdata({ barName: e.target.value });
-				}}
-			/>
-			<Button variant="contained" onClick={(e) => onSubmit(e)}>
-				Submit
-			</Button>
-		</Box>
+		<Container maxWidth="sm">
+			<Button onClick={handleOpen}>Open modal</Button>
+			<Modal
+				style={{ width: "100px" }}
+				open={open}
+				onClose={handleClose}
+				aria-labelledby="modal-modal-title"
+				aria-describedby="modal-modal-description"
+			>
+				<Box sx={style}>
+					<Typography sx={{ p: 2 }}>Enter New Item</Typography>
+					<TextField
+						id="outlined-basic"
+						label="Item Name"
+						variant="outlined"
+						style={{ width: "90%" }}
+					/>
+					<TextField
+						id="outlined-basic"
+						label="Volume"
+						variant="outlined"
+						style={{ width: "90%" }}
+					/>
+					<TextField
+						id="outlined-basic"
+						label="Price"
+						variant="outlined"
+						style={{ width: "90%" }}
+					/>
+				</Box>
+			</Modal>
+		</Container>
 	);
-};
+}

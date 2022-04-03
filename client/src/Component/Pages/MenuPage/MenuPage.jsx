@@ -15,6 +15,7 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 export const MenuPage = () => {
 	const [restaurant] = useContext(RestaurantState);
 	let params = useParams();
+	////using index of json to get data///
 	let menu = restaurant[params.idx].menuItem;
 	return (
 		<Container style={{ marginTop: "15px" }}>
