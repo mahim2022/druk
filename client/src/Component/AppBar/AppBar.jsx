@@ -12,6 +12,12 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import { fetchPost } from "../Api";
+import {
+	unstable_HistoryRouter,
+	useLocation,
+	useParams,
+} from "react-router-dom";
+import { useEffect } from "react";
 
 const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
@@ -41,6 +47,14 @@ const ResponsiveAppBar = () => {
 		console.log(data);
 	};
 
+	const { pathname } = useLocation();
+	useEffect(() => {
+		console.log(pathname);
+	}, []);
+
+	if (pathname === "/") {
+		return <></>;
+	}
 	return (
 		<AppBar position="static">
 			<Container maxWidth="xl">

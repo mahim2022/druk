@@ -6,13 +6,15 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Button, Paper } from "@mui/material";
-import SettingsIcon from "@mui/icons-material/Settings";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { AddPopOver } from "../../Form/form";
+import { DeleteItem } from "../../Api";
+import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
 
 export const BarAssociation = () => {
 	const [restaurant] = useContext(RestaurantState);
 	const barData = restaurant[0];
+	const [counter, setCounter] = useContext(DataCounter);
 
 	///////popover////
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -25,6 +27,12 @@ export const BarAssociation = () => {
 	const open = Boolean(anchorEl);
 	const id = open ? "simple-popover" : undefined;
 	///popover///
+
+	const handleDelete = async (e, itemId) => {
+		e.preventDefault(e);
+		const result = await DeleteItem(barData._id, itemId);
+		setCounter(!counter);
+	};
 
 	if (!barData) {
 		return <p>Server Error</p>;
@@ -84,7 +92,12 @@ export const BarAssociation = () => {
 										></AddPopOver>
 									</div>
 									<div>
-										<Button variant="text">
+										<Button
+											variant="text"
+											onClick={(e) => {
+												handleDelete(e, cur._id);
+											}}
+										>
 											<DeleteForeverIcon></DeleteForeverIcon>
 										</Button>
 									</div>
