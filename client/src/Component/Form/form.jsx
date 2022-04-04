@@ -1,59 +1,163 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
-import Modal from "@mui/material/Modal";
-import { Container, TextField } from "@mui/material";
+import {
+	Container,
+	Button,
+	Popover,
+	Typography,
+	TextField,
+} from "@mui/material";
+import { useContext, useEffect, useState } from "react";
+import AddIcon from "@mui/icons-material/Add";
+import CancelIcon from "@mui/icons-material/Cancel";
+import { addItem, editItem } from "../Api";
+import { DataCounter } from "../States/RestaurantDataUpdateCounter/DataCounter";
+import SettingsIcon from "@mui/icons-material/Settings";
 
-const style = {
-	position: "absolute",
-	top: "50%",
-	left: "50%",
-	transform: "translate(-50%, -50%)",
-	width: 400,
-	bgcolor: "background.paper",
-	border: "2px solid #000",
-	boxShadow: 24,
-	p: 4,
-};
+export const AddPopOver = (props) => {
+	const [counter, setCounter] = useContext(DataCounter);
+	const [data, setdata] = useState({ itemName: "", vol: "", price: "" });
+	//////popover mechanism////////
+	const [anchorEl, setAnchorEl] = useState(null);
+	const handleClick = (event) => {
+		setAnchorEl(event.currentTarget);
+		if (props.popOverType === "edit") {
+			setdata({
+				itemName: props.itemName,
+				vol: props.vol,
+				price: props.price,
+			});
+		}
+	};
+	const handleClose = () => {
+		setAnchorEl(null);
+		setdata({ itemName: "", vol: "", price: "" });
+	};
+	const open = Boolean(anchorEl);
+	const id = open ? "simple-popover" : undefined;
+	///////////////////////////////////
 
-export default function FormModal() {
-	const [open, setOpen] = React.useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+	/////Form input and server mechanism//////
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (props.popOverType === "add") {
+			const result = await addItem(props.barId, data);
+		} else {
+			const itemId = props.itemId;
+			const finalResult = { ...data, itemId };
+			const result = await editItem(props.barId, finalResult);
+		}
+		setCounter(!counter);
+		setdata({ itemName: "", vol: "", price: "" });
+		handleClose();
+	};
+
+	// useEffect(() => {
+	// 	console.log(barId.barId);
+	// });
 
 	return (
-		<Container maxWidth="sm">
-			<Button onClick={handleOpen}>Open modal</Button>
-			<Modal
-				style={{ width: "100px" }}
-				open={open}
-				onClose={handleClose}
-				aria-labelledby="modal-modal-title"
-				aria-describedby="modal-modal-description"
+		<div>
+			<Button
+				aria-describedby={id}
+				variant="text"
+				onClick={handleClick}
+				style={{ width: props.popOverType === "add" ? "100%" : "1px" }}
 			>
-				<Box sx={style}>
-					<Typography sx={{ p: 2 }}>Enter New Item</Typography>
-					<TextField
-						id="outlined-basic"
-						label="Item Name"
-						variant="outlined"
-						style={{ width: "90%" }}
-					/>
-					<TextField
-						id="outlined-basic"
-						label="Volume"
-						variant="outlined"
-						style={{ width: "90%" }}
-					/>
-					<TextField
-						id="outlined-basic"
-						label="Price"
-						variant="outlined"
-						style={{ width: "90%" }}
-					/>
-				</Box>
-			</Modal>
-		</Container>
+				{props.popOverType === "add" ? (
+					<AddIcon></AddIcon>
+				) : (
+					<SettingsIcon></SettingsIcon>
+				)}
+				{/* <AddIcon></AddIcon> */}
+			</Button>
+			<Popover
+				id={id}
+				open={open}
+				anchorEl={anchorEl}
+				onClose={handleClose}
+				anchorOrigin={{
+					vertical: "top",
+					horizontal: "center",
+				}}
+				transformOrigin={{
+					vertical: "top",
+					horizontal: "center",
+				}}
+			>
+				<Container
+					maxWidth="sm"
+					style={{
+						display: "flex",
+						flexDirection: "row",
+						justifyContent: "space-between",
+					}}
+				>
+					<Button
+						variant="text"
+						style={{
+							position: "relative",
+							left: "90%",
+							maxHeight: "24px",
+						}}
+						onClick={handleClose}
+					>
+						<CancelIcon></CancelIcon>
+					</Button>
+					<div
+						style={{
+							position: "relative",
+							right: "15%",
+							paddingBottom: "20px",
+						}}
+					>
+						<Typography sx={{ p: 2 }}>Enter New Item</Typography>
+						<TextField
+							id="outlined-basic"
+							label="Item Name"
+							variant="outlined"
+							style={{ width: "110%", marginTop: "3px" }}
+							value={data.itemName}
+							onChange={(e) => {
+								setdata({ ...data, itemName: e.target.value });
+							}}
+						/>
+						<TextField
+							id="outlined-basic"
+							label="Volume"
+							variant="outlined"
+							style={{ width: "110%", marginTop: "3px" }}
+							value={data.vol}
+							onChange={(e) => {
+								setdata({ ...data, vol: Number(e.target.value) });
+							}}
+						/>
+						<TextField
+							id="outlined-basic"
+							label="Price"
+							variant="outlined"
+							style={{ width: "110%", marginTop: "3px" }}
+							value={data.price}
+							onChange={(e) => {
+								setdata({ ...data, price: Number(e.target.value) });
+							}}
+						/>
+					</div>
+				</Container>
+				<Button
+					variant="contained"
+					style={{
+						float: "right",
+						marginBottom: "10px",
+						marginRight: "10px",
+						marginTop: "-10px",
+					}}
+					onClick={(e) => {
+						handleSubmit(e);
+					}}
+				>
+					Submit
+				</Button>
+			</Popover>
+		</div>
 	);
-}
+};

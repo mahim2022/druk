@@ -5,13 +5,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { RestaurantStateProvider } from "./Component/States/RestaurantState";
+import { DataCounterProvider } from "./Component/States/RestaurantDataUpdateCounter/DataCounter";
 
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<RestaurantStateProvider>
-				<App />
-			</RestaurantStateProvider>
+			<DataCounterProvider>
+				<RestaurantStateProvider>
+					<App />
+				</RestaurantStateProvider>
+			</DataCounterProvider>
 		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById("root")

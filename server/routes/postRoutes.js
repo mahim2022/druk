@@ -1,10 +1,15 @@
 // const express = require("express");
 import express from "express";
-import { getPosts } from "../ControllerFunctions/postFunctions.js";
+import {
+	addItem,
+	editItem,
+	getPosts,
+} from "../ControllerFunctions/postFunctions.js";
 
 const router = express.Router();
 
 router.get("/", getPosts);
-// router.post("/", createBar);
+router.patch("/add/:id", addItem);
+router.patch("/edit/:id", editItem);
 
 export default router;
