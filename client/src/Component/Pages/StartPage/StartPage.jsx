@@ -8,20 +8,25 @@ export const StartPage = () => {
 
 	return (
 		<>
-			<Container maxWidth="sm">
+			<Container
+				maxWidth="sm"
+				style={{ backgroundColor: "black", height: "100vh" }}
+			>
 				<div
 					style={{
 						display: "flex",
 						flexDirection: "column",
 						justifyContent: "center",
 						position: "relative",
-						top: "50vw",
+						top: "38vh",
 					}}
 				>
 					<Button
 						variant="contained"
 						style={{
 							marginTop: "15px",
+							backgroundColor: "yellow",
+							color: "black",
 						}}
 						onClick={(e) => {
 							navigate("customer");
@@ -33,9 +38,11 @@ export const StartPage = () => {
 						variant="contained"
 						style={{
 							marginTop: "15px",
+							backgroundColor: "yellow",
+							color: "black",
 						}}
 						onClick={(e) => {
-							navigate("bar");
+							navigate("ownerlogin");
 						}}
 					>
 						Bar Owner

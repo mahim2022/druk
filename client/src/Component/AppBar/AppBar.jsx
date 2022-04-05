@@ -47,14 +47,12 @@ const ResponsiveAppBar = () => {
 		console.log(data);
 	};
 
+	////doesnot render appbar on certain pages///
 	const { pathname } = useLocation();
-	useEffect(() => {
-		console.log(pathname);
-	}, []);
-
-	if (pathname === "/") {
+	if (pathname === "/" || pathname === "/ownerlogin") {
 		return <></>;
 	}
+	//////////
 	return (
 		<AppBar position="static">
 			<Container maxWidth="xl">

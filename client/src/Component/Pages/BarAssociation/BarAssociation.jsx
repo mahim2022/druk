@@ -10,10 +10,12 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { AddPopOver } from "../../Form/form";
 import { DeleteItem } from "../../Api";
 import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
+import { useParams } from "react-router-dom";
 
 export const BarAssociation = () => {
+	const params = useParams();
 	const [restaurant] = useContext(RestaurantState);
-	const barData = restaurant[0];
+	const barData = restaurant[params.idx];
 	const [counter, setCounter] = useContext(DataCounter);
 
 	///////popover////
