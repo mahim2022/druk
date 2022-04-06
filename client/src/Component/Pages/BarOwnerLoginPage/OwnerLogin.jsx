@@ -4,10 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { RestaurantState } from "../../States/RestaurantState";
 
 export const OwnerLogin = () => {
-	let barNames = [];
 	const navigate = useNavigate();
 	const [data, setdata] = useState("");
 	const [restaurant, setrestaurant] = useContext(RestaurantState);
+	let barNames = ["KingFisher", "Eram"];
+	// useEffect(() => {
+	// 	restaurant.map((cur) => barNames.push(cur.barName));
+	// }, []);
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		restaurant.map((cur, index) => {
@@ -16,49 +19,57 @@ export const OwnerLogin = () => {
 			}
 		});
 	};
-	useEffect(() => {
-		restaurant.map((cur) => barNames.push(cur.barName));
-	}, []);
 
 	return (
-		<Container
-			maxWidth="sm"
-			style={{
-				backgroundColor: "black",
-				height: "100vh",
-			}}
-		>
-			<Paper
-				elevation={3}
+		<Container style={{ backgroundColor: "black", height: "100vh" }}>
+			<Container
+				maxWidth="sm"
 				style={{
-					padding: "20px",
 					position: "relative",
 					top: "25vh",
-					// display: "none",
+					// backgroundColor: "black",
+					// height: "100vh",
 				}}
 			>
-				<h4>Enter Bar Name</h4>
-				<TextField
-					id="outlined-basic"
-					label="Bar Name"
-					variant="outlined"
-					style={{ width: "100%" }}
-					value={data}
-					onChange={(e) => {
-						setdata(e.target.value);
+				<Paper
+					elevation={3}
+					style={{
+						padding: "20px",
+						// display: "none",
 					}}
-				/>
-				<div>
-					<Button
-						onClick={(e) => handleSubmit(e)}
-						variant="contained"
-						style={{ marginTop: "10px" }}
-					>
-						Submit
-					</Button>
+				>
+					<h4>Enter Bar Name</h4>
+					<TextField
+						id="outlined-basic"
+						label="Bar Name"
+						variant="outlined"
+						style={{ width: "100%" }}
+						value={data}
+						onChange={(e) => {
+							setdata(e.target.value);
+						}}
+					/>
+					<div>
+						<Button
+							onClick={(e) => handleSubmit(e)}
+							variant="contained"
+							style={{ marginTop: "10px" }}
+						>
+							Submit
+						</Button>
+					</div>
+				</Paper>
+
+				<div style={{ marginTop: "10px" }}>
+					{barNames.map((cur, idx) => {
+						return (
+							<li style={{ color: "yellow" }} key={idx}>
+								{cur}
+							</li>
+						);
+					})}
 				</div>
-			</Paper>
-			{/* <div>{barNames}</div> */}
+			</Container>
 		</Container>
 	);
 };
