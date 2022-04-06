@@ -6,15 +6,17 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { RestaurantStateProvider } from "./Component/States/RestaurantState";
 import { DataCounterProvider } from "./Component/States/RestaurantDataUpdateCounter/DataCounter";
-
+import { CartItemStateProvider } from "./Component/States/CartItemState/CartItemState.jsx";
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<DataCounterProvider>
-				<RestaurantStateProvider>
-					<App />
-				</RestaurantStateProvider>
-			</DataCounterProvider>
+			<CartItemStateProvider>
+				<DataCounterProvider>
+					<RestaurantStateProvider>
+						<App />
+					</RestaurantStateProvider>
+				</DataCounterProvider>
+			</CartItemStateProvider>
 		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById("root")

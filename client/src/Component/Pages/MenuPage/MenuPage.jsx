@@ -4,19 +4,49 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { Container } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RestaurantState } from "../../States/RestaurantState";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
+import { CartItemState } from "../../States/CartItemState/CartItemState";
 
 export const MenuPage = () => {
 	const [restaurant] = useContext(RestaurantState);
+	const [cartItem, setcartItem] = useContext(CartItemState);
 	let params = useParams();
+
 	////using index of json to get data///
-	let menu = restaurant[params.idx].menuItem;
+	let menu = [];
+
+	menu = restaurant[params.idx].menuItem;
+
+	const addToCart = (e, cur) => {
+		e.preventDefault();
+		let match = false;
+		cartItem.forEach((curr) => {
+			if (curr._id === cur._id) {
+				curr.count++;
+				match = true;
+			}
+		});
+		if (!match) {
+			cur.count = 1;
+			setcartItem([...cartItem, cur]);
+		}
+	};
+
+	console.log(cartItem);
+
+	if (!menu) {
+		return (
+			<>
+				<h1>Loadinng</h1>
+			</>
+		);
+	}
 	return (
 		<Container style={{ marginTop: "15px" }}>
 			<h3>Menu</h3>
@@ -55,6 +85,7 @@ export const MenuPage = () => {
 											style={{ postion: "relative", bottom: "28px" }}
 											size="small"
 											color="primary"
+											onClick={(e) => addToCart(e, cur)}
 										>
 											Add to Cart
 										</Button>
