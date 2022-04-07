@@ -8,8 +8,10 @@ import { Paper } from "@mui/material";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import { useNavigate } from "react-router-dom";
 
 export function Cart() {
+	let navigate = useNavigate();
 	const [cartItems, setcartItems] = React.useContext(CartItemState);
 	const [counter, setcounter] = React.useState(false);
 	const [anchorEl, setAnchorEl] = React.useState(null);
@@ -128,6 +130,17 @@ export function Cart() {
 						</Paper>
 					);
 				})}
+				<Button
+					onClick={(e) => {
+						e.preventDefault();
+						navigate(`/checkoutPage`);
+						handleClose();
+					}}
+					variant="contained"
+					style={{ width: "100%", marginTop: "3px", marginBottom: "3px" }}
+				>
+					<Typography>Goto Checkout</Typography>
+				</Button>
 			</Popover>
 		</div>
 	);

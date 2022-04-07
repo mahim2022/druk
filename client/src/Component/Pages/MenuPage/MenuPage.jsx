@@ -14,15 +14,17 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 import { CartItemState } from "../../States/CartItemState/CartItemState";
 
 export const MenuPage = () => {
+	// let menu = [];
+	const [menu, setmenu] = useState([]);
+	let params = useParams();
 	const [restaurant] = useContext(RestaurantState);
 	const [cartItem, setcartItem] = useContext(CartItemState);
-	console.log(cartItem);
-	let params = useParams();
 
 	////using index of json to get data///
-	let menu = [];
 
-	menu = restaurant[params.idx].menuItem;
+	useEffect(() => {
+		setmenu(restaurant[params.idx].menuItem);
+	}, []);
 
 	const addToCart = (e, cur) => {
 		e.preventDefault();
