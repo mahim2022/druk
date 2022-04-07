@@ -44,6 +44,7 @@ export const CheckOutPage = () => {
 		setcartItems(newArray);
 		setcounter(!counter);
 	};
+	useEffect(() => {}, [cartItems]);
 	if (cartItems.length === 0) {
 		return (
 			<>
@@ -110,8 +111,20 @@ export const CheckOutPage = () => {
 							</Paper>
 						);
 					})}
-					<Paper elevation={3} style={{ marginTop: "5px", paddingTop: "4px" }}>
+					<Paper
+						elevation={3}
+						style={{
+							marginTop: "5px",
+							padding: "4px",
+							display: "flex",
+							flexDirection: "row",
+							justifyContent: "space-between",
+						}}
+					>
 						<Typography>Total Price:{price} tk</Typography>
+						<Button variant="contained">
+							<Typography>Order Now</Typography>
+						</Button>
 					</Paper>
 				</Container>
 			</>

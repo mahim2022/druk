@@ -137,7 +137,12 @@ export function Cart() {
 						handleClose();
 					}}
 					variant="contained"
-					style={{ width: "100%", marginTop: "3px", marginBottom: "3px" }}
+					style={{
+						// width: "80%",
+						float: "right",
+						marginTop: "3px",
+						marginBottom: "3px",
+					}}
 				>
 					<Typography>Goto Checkout</Typography>
 				</Button>
