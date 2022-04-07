@@ -11,10 +11,13 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 export function Cart() {
 	const [cartItems, setcartItems] = React.useContext(CartItemState);
+	const [counter, setcounter] = React.useState(false);
 	const [anchorEl, setAnchorEl] = React.useState(null);
 
 	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
+		if (cartItems.length > 0) {
+			setAnchorEl(event.currentTarget);
+		}
 	};
 
 	const handleClose = () => {
@@ -24,12 +27,43 @@ export function Cart() {
 	const open = Boolean(anchorEl);
 	const id = open ? "simple-popover" : undefined;
 
+	const itemControls = (e, cur, param) => {
+		let newArray = cartItems;
+		let indexForDeletion = null;
+		let allowDelete = false;
+		newArray.forEach((curr, idx) => {
+			if (curr._id === cur._id) {
+				if (param === "increase") {
+					curr.count++;
+				}
+				if (param === "decrease") {
+					curr.count--;
+					if (curr.count < 1) {
+						newArray.splice(idx, 1);
+					}
+				}
+				if (param === "delete") {
+					indexForDeletion = idx;
+					allowDelete = true;
+				}
+			}
+		});
+		if (indexForDeletion >= 0 && allowDelete) {
+			newArray.splice(indexForDeletion, 1);
+		}
+		setcartItems(newArray);
+		setcounter(!counter);
+	};
+	/////////Update state on Change///////
+	React.useEffect(() => {}, [counter]);
+
 	return (
 		<div>
 			<Button aria-describedby={id} variant="contained" onClick={handleClick}>
 				<ShoppingBagOutlinedIcon></ShoppingBagOutlinedIcon>
 				<Typography>{cartItems.length}</Typography>
 			</Button>
+
 			<Popover
 				id={id}
 				open={open}
@@ -46,8 +80,9 @@ export function Cart() {
 							key={idx}
 							elevation={3}
 							style={{
-								padding: "20px",
-								width: "250px",
+								paddingTop: "10px",
+								paddingLeft: "10px",
+								width: "280px",
 								display: "flex",
 								flexDirection: "row",
 								justifyContent: "space-between",
@@ -64,11 +99,31 @@ export function Cart() {
 									display: "flex",
 									flexDirection: "column",
 									justifyContent: "center",
+									marginTop: "-10px",
 								}}
 							>
-								<DeleteForeverOutlinedIcon></DeleteForeverOutlinedIcon>
-								<RemoveOutlinedIcon></RemoveOutlinedIcon>
-								<AddOutlinedIcon></AddOutlinedIcon>
+								<Button color="error">
+									<DeleteForeverOutlinedIcon
+										onClick={(e) => {
+											itemControls(e, cur, "delete");
+										}}
+									></DeleteForeverOutlinedIcon>
+								</Button>
+								<Button>
+									<RemoveOutlinedIcon
+										onClick={(e) => {
+											itemControls(e, cur, "decrease");
+										}}
+									></RemoveOutlinedIcon>
+								</Button>
+								<Button
+									color="success"
+									onClick={(e) => {
+										itemControls(e, cur, "increase");
+									}}
+								>
+									<AddOutlinedIcon></AddOutlinedIcon>
+								</Button>
 							</div>
 						</Paper>
 					);

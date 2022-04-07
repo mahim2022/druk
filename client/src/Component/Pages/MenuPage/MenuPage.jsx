@@ -16,6 +16,7 @@ import { CartItemState } from "../../States/CartItemState/CartItemState";
 export const MenuPage = () => {
 	const [restaurant] = useContext(RestaurantState);
 	const [cartItem, setcartItem] = useContext(CartItemState);
+	console.log(cartItem);
 	let params = useParams();
 
 	////using index of json to get data///
@@ -37,8 +38,6 @@ export const MenuPage = () => {
 			setcartItem([...cartItem, cur]);
 		}
 	};
-
-	console.log(cartItem);
 
 	if (!menu) {
 		return (
