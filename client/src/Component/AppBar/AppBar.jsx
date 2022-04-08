@@ -125,7 +125,7 @@ const ResponsiveAppBar = () => {
 					</Box>
 
 					<Box sx={{ flexGrow: 0 }}>
-						<Cart></Cart>
+						{pathname === "/checkoutPage" ? <></> : <Cart></Cart>}
 					</Box>
 				</Toolbar>
 			</Container>

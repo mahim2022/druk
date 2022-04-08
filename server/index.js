@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
+import userRoutes from "./routes/UserRoutes.js";
 // const express = require("express");
 // const cors = require("cors");
 // const bodyParser = require("body-parser");
@@ -14,7 +15,10 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: "true" }));
 
 app.use(cors());
 
+/////for getting store data///
 app.use("/post", postFunctions);
+////for getting customerUserData///
+app.use("/customer", userRoutes);
 
 app.get("/hi", (req, res) => {
 	res.send("Hellow World");

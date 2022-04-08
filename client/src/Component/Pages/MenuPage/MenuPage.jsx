@@ -18,13 +18,15 @@ export const MenuPage = () => {
 	const [menu, setmenu] = useState([]);
 	let params = useParams();
 	const [restaurant] = useContext(RestaurantState);
+
 	const [cartItem, setcartItem] = useContext(CartItemState);
 
 	////using index of json to get data///
+	const finalRestaurant = restaurant; ////was loosing set for some reason so now state is set to menu only when restaurant is set to finalRestaurant
 
-	useEffect(() => {
-		setmenu(restaurant[params.idx].menuItem);
-	}, []);
+	useEffect(async () => {
+		setmenu(finalRestaurant[params.idx]?.menuItem);
+	}, [finalRestaurant]);
 
 	const addToCart = (e, cur) => {
 		e.preventDefault();
@@ -44,7 +46,7 @@ export const MenuPage = () => {
 	if (!menu) {
 		return (
 			<>
-				<h1>Loadinng</h1>
+				<h1>Loading</h1>
 			</>
 		);
 	}
