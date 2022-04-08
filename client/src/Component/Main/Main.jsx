@@ -7,6 +7,7 @@ import { BarAssociation } from "../Pages/BarAssociation/BarAssociation";
 import { StartPage } from "../Pages/StartPage/StartPage";
 import { OwnerLogin } from "../Pages/BarOwnerLoginPage/OwnerLogin";
 import { CheckOutPage } from "../Pages/CheckOutPage/CheckOutPage";
+import { CustomerSignIn } from "../Pages/CustomerSignIn/CustomerSignIn";
 
 export const Main = () => {
 	return (
@@ -20,6 +21,7 @@ export const Main = () => {
 				<Route path="bar/:idx" element={<BarAssociation />} />
 				<Route path="ownerlogin" element={<OwnerLogin />} />
 				<Route path="checkoutpage" element={<CheckOutPage />} />
+				<Route path="customersignin" element={<CustomerSignIn />} />
 			</Routes>
 		</div>
 	);

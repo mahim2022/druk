@@ -22,21 +22,23 @@ export const MenuPage = () => {
 	const [cartItem, setcartItem] = useContext(CartItemState);
 
 	////using index of json to get data///
-	const finalRestaurant = restaurant; ////was loosing set for some reason so now state is set to menu only when restaurant is set to finalRestaurant
-
-	useEffect(async () => {
-		setmenu(finalRestaurant[params.idx]?.menuItem);
-	}, [finalRestaurant]);
+	useEffect(() => {
+		setmenu(restaurant[params.idx]?.menuItem);
+	}, [restaurant]);
 
 	const addToCart = (e, cur) => {
 		e.preventDefault();
 		let match = false;
-		cartItem.forEach((curr) => {
+		let newArray = cartItem;
+		newArray.forEach((curr) => {
 			if (curr._id === cur._id) {
 				curr.count++;
 				match = true;
 			}
 		});
+		if (match) {
+			setcartItem(newArray);
+		}
 		if (!match) {
 			cur.count = 1;
 			setcartItem([...cartItem, cur]);

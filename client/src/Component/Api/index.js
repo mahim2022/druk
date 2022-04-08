@@ -17,5 +17,15 @@ export const editItem = (id, newItem) => {
 };
 
 export const DeleteItem = (id, itemId) => {
-	return Api.delete(`post/delete/${id}/${itemId}`);
+	return Api.delete(`/post/delete/${id}/${itemId}`);
+};
+
+//////////User routes/////
+
+export const SignUp = (data) => {
+	return Api.post("/customer/signup", data);
+};
+
+export const SignIn = (data) => {
+	return Api.post("/customer/signin", data);
 };
