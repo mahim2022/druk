@@ -1,5 +1,5 @@
 import { Button, Container, Paper, TextField, Typography } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SignIn, SignUp } from "../../Api";
 import { useNavigate } from "react-router-dom";
 
@@ -12,9 +12,14 @@ export const CustomerSignIn = () => {
 		email: "",
 		password: "",
 	});
+	const [errorRes, setErrorRes] = useState(0);
 	const handleSwitch = (e) => {
 		e.preventDefault();
 		setchange((change) => !change);
+	};
+
+	const clear = () => {
+		setdata({ name: "", phoneNumber: "", email: "", password: "" });
 	};
 
 	const handleSubmit = async (e, param) => {
@@ -24,8 +29,21 @@ export const CustomerSignIn = () => {
 				email: data.email.toLowerCase(),
 				password: data.password,
 			});
-			localStorage.setItem("Profile", JSON.stringify(result.data));
-			navigate(`/customer`);
+			///wrong password
+			if (result === 402) {
+				setErrorRes(result);
+				clear();
+			}
+			////user non-exsitent
+			if (result === 401) {
+				setErrorRes(result);
+				clear();
+			}
+			if (result.status === 201) {
+				localStorage.setItem("Profile", JSON.stringify(result.data));
+				navigate(`/customer`);
+				setErrorRes(0);
+			}
 		}
 		if (param === "signup") {
 			const result = await SignUp({
@@ -34,11 +52,22 @@ export const CustomerSignIn = () => {
 				email: data.email.toLowerCase(),
 				password: data.password,
 			});
-			localStorage.setItem("Profile", JSON.stringify(result.data));
-			navigate(`/customer`);
+			if (result === 404) {
+				setErrorRes(result);
+				clear();
+			}
+			if (result.status === 201) {
+				localStorage.setItem("Profile", JSON.stringify(result.data));
+				navigate(`/customer`);
+				setErrorRes(0);
+			}
 		}
-		setdata({ name: "", phoneNumber: "", email: "", password: "" });
+		clear();
 	};
+	///resetting errors on changing from signup options//
+	useEffect(() => {
+		setErrorRes(0);
+	}, [change]);
 	return (
 		<>
 			<Container>
@@ -102,6 +131,16 @@ export const CustomerSignIn = () => {
 							value={data.email}
 							onChange={(e) => setdata({ ...data, email: e.target.value })}
 						/>
+						{errorRes === 401 ? (
+							<Typography style={{ color: "red" }}>
+								Email Does'nt Exist sign up!!!
+							</Typography>
+						) : null}
+						{errorRes === 404 ? (
+							<Typography style={{ color: "red" }}>
+								User already exists sign in!!!
+							</Typography>
+						) : null}
 						<TextField
 							size="small"
 							style={{ marginTop: "5px", marginBottom: "5px", width: "85%" }}
@@ -111,6 +150,9 @@ export const CustomerSignIn = () => {
 							value={data.password}
 							onChange={(e) => setdata({ ...data, password: e.target.value })}
 						/>
+						{errorRes === 402 ? (
+							<Typography style={{ color: "red" }}>Wrong Password</Typography>
+						) : null}
 					</Container>
 					<div
 						style={{

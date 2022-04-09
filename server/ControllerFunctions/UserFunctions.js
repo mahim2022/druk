@@ -21,7 +21,7 @@ export const SignUp = async (req, res) => {
 		const token = jwt.sign({ email: result.email, id: result._id }, "test", {
 			expiresIn: "1h",
 		});
-		res.status(200).json({ result, token });
+		res.status(201).json({ result, token });
 	} catch (error) {
 		res.status(404).json({ message: `Error in server ${error}` });
 	}
@@ -39,7 +39,7 @@ export const SignIn = async (req, res) => {
 			existingUser.password
 		);
 		if (!isPasswordCorrect)
-			return res.status(401).json({ message: "Password does'nt match" });
+			return res.status(402).json({ message: "Password does'nt match" });
 
 		const token = jwt.sign(
 			{ email: existingUser.email, id: existingUser._id },

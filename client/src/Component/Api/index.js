@@ -23,13 +23,13 @@ export const DeleteItem = (id, itemId) => {
 //////////User routes/////
 
 export const SignUp = (data) => {
-	return Api.post("/customer/signup", data).catch((error) =>
-		console.log(error.response.status)
-	);
+	return Api.post("/customer/signup", data).catch((error) => {
+		return error.response.status;
+	});
 };
 
 export const SignIn = (data) => {
-	return Api.post("/customer/signin", data).catch((error) =>
-		console.log(error.response.status)
-	);
+	return Api.post("/customer/signin", data).catch((error) => {
+		return error.response.status;
+	});
 };
