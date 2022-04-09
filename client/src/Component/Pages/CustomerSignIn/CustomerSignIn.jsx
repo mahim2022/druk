@@ -1,7 +1,10 @@
 import { Button, Container, Paper, TextField, Typography } from "@mui/material";
 import { useState } from "react";
+import { SignIn, SignUp } from "../../Api";
+import { useNavigate } from "react-router-dom";
 
 export const CustomerSignIn = () => {
+	let navigate = useNavigate();
 	const [change, setchange] = useState(true);
 	const [data, setdata] = useState({
 		name: "",
@@ -14,18 +17,41 @@ export const CustomerSignIn = () => {
 		setchange((change) => !change);
 	};
 
-	const handleSubmit = (e, param) => {
+	const handleSubmit = async (e, param) => {
 		e.preventDefault();
 		if (param === "signin") {
+			const result = await SignIn({
+				email: data.email.toLowerCase(),
+				password: data.password,
+			});
+			localStorage.setItem("Profile", JSON.stringify(result.data));
+			navigate(`/customer`);
 		}
 		if (param === "signup") {
+			const result = await SignUp({
+				name: data.name.toLowerCase(),
+				phoneNumber: data.phoneNumber,
+				email: data.email.toLowerCase(),
+				password: data.password,
+			});
+			localStorage.setItem("Profile", JSON.stringify(result.data));
+			navigate(`/customer`);
 		}
+		setdata({ name: "", phoneNumber: "", email: "", password: "" });
 	};
 	return (
 		<>
 			<Container>
 				<Paper style={{ marginTop: "30px" }}>
-					<Typography style={{ textAlign: "center" }}>Login</Typography>
+					<Typography
+						style={{
+							textAlign: "center",
+							fontWeight: "bolder",
+							fontSize: "1.5rem",
+						}}
+					>
+						Login
+					</Typography>
 					<Container
 						style={{
 							display: "flex",
@@ -47,9 +73,7 @@ export const CustomerSignIn = () => {
 									label="Name"
 									variant="outlined"
 									value={data.name}
-									onChange={(e) => {
-										setdata(e.target.value);
-									}}
+									onChange={(e) => setdata({ ...data, name: e.target.value })}
 								/>
 								<TextField
 									size="small"
@@ -62,9 +86,9 @@ export const CustomerSignIn = () => {
 									label="Phone Number"
 									variant="outlined"
 									value={data.phoneNumber}
-									onChange={(e) => {
-										setdata(e.target.value);
-									}}
+									onChange={(e) =>
+										setdata({ ...data, phoneNumber: e.target.value })
+									}
 								/>
 							</>
 						) : null}
@@ -75,6 +99,8 @@ export const CustomerSignIn = () => {
 							id="outlined-basic"
 							label="Email"
 							variant="outlined"
+							value={data.email}
+							onChange={(e) => setdata({ ...data, email: e.target.value })}
 						/>
 						<TextField
 							size="small"
@@ -82,6 +108,8 @@ export const CustomerSignIn = () => {
 							id="outlined-basic"
 							label="Password"
 							variant="outlined"
+							value={data.password}
+							onChange={(e) => setdata({ ...data, password: e.target.value })}
 						/>
 					</Container>
 					<div
