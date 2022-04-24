@@ -1,11 +1,19 @@
 import axios from "axios";
+import { useEffect } from "react";
+import { DataCounter } from "../States/RestaurantDataUpdateCounter/DataCounter";
 
 const Api = axios.create({ baseURL: "http://localhost:5000" });
 
 // const url = "http://localhost:5000";
 
-export const fetchPost = () => {
-	return Api.get("/post");
+export const fetchPost = async () => {
+	const { data } = await Api.get("/post");
+	return data;
+};
+
+export const fetchMenu = async (id) => {
+	const { data } = await Api.get(`post/menu/${id}`);
+	return data;
 };
 
 export const addItem = (id, newItem) => {

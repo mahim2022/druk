@@ -1,13 +1,31 @@
 import { Bar } from "../SchemaModel/RestaurantsSchema.js";
 import mongoose from "mongoose";
+import { MenuItem } from "../SchemaModel/RestaurantsSchema.js";
 // const mongoose = require("mongoose");
 
-export const getPosts = async (req, res) => {
+export const getBar = async (req, res) => {
 	try {
 		const post = await Bar.find();
 		res.status(200).json(post);
 	} catch (error) {
 		res.status(400).json(error);
+	}
+};
+
+export const getMenu = async (req, res) => {
+	const { id } = req.params;
+	try {
+		// if (mongoose.Types.ObjectId.isValid(id))
+		// 	return res.status(404).json(`No store with id: ${id}`);
+
+		const Menu = await MenuItem.find({ barId: id });
+
+		if (!Menu) return res.status(401).json(`No items currently on menu`);
+
+		console.log(Menu);
+		res.status(200).json(Menu);
+	} catch (error) {
+		res.status(400).res(error);
 	}
 };
 

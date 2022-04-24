@@ -12,19 +12,20 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { Button, CardActionArea, CardActions } from "@mui/material";
 import { CartItemState } from "../../States/CartItemState/CartItemState";
+import { fetchMenu } from "../../Api";
+import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
 
 export const MenuPage = () => {
 	// let menu = [];
+	const [counter] = useContext(DataCounter);
 	const [menu, setmenu] = useState([]);
 	let params = useParams();
-	const [restaurant] = useContext(RestaurantState);
-
 	const [cartItem, setcartItem] = useContext(CartItemState);
-
 	////using index of json to get data///
-	useEffect(() => {
-		setmenu(restaurant[params.idx]?.menuItem);
-	}, [restaurant]);
+	useEffect(async () => {
+		const result = await fetchMenu(params.idx);
+		setmenu(result);
+	}, [counter]);
 
 	const addToCart = (e, cur) => {
 		e.preventDefault();

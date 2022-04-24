@@ -4,19 +4,21 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RestaurantState } from "../../States/RestaurantState";
 import { fetchPost } from "../../Api";
 import { useNavigate } from "react-router-dom";
+import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
 
 export const Restaurants = () => {
 	let navigate = useNavigate();
-	const [restaurant, setrestaurant] = useContext(RestaurantState);
-
+	const [counter, setCounter] = useContext(DataCounter);
+	// const [restaurant, setrestaurant] = useContext(RestaurantState);
+	const [restaurant, setRestaurant] = useState([]);
 	useEffect(async () => {
-		const { data } = await fetchPost();
-		setrestaurant(data);
-	}, []);
+		const result = await fetchPost();
+		setRestaurant(result);
+	}, [counter]);
 
 	return (
 		<Container>
@@ -24,7 +26,7 @@ export const Restaurants = () => {
 			{restaurant.map((cur, idx) => {
 				return (
 					<Card
-						onClick={() => navigate(`/menu/${idx}`)}
+						onClick={() => navigate(`/menu/${cur._id}`)}
 						key={idx}
 						style={{ marginTop: "20px", marginBottom: "20px" }}
 						sx={{ maxWidth: 400 }}

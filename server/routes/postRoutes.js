@@ -4,12 +4,14 @@ import {
 	addItem,
 	DeleteItem,
 	editItem,
-	getPosts,
+	getBar,
+	getMenu,
 } from "../ControllerFunctions/postFunctions.js";
 
 const router = express.Router();
 
-router.get("/", getPosts);
+router.get("/", getBar);
+router.get("/menu/:id", getMenu);
 router.patch("/add/:id", addItem);
 router.patch("/edit/:id", editItem);
 router.delete("/delete/:id/:itemId", DeleteItem);

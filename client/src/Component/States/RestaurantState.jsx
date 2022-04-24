@@ -9,8 +9,9 @@ export const RestaurantStateProvider = (props) => {
 	const [restaurant, setrestaurant] = useState([]);
 
 	useEffect(async () => {
-		const { data } = await fetchPost();
-		setrestaurant(data);
+		// const { data } = await fetchPost();
+		// setrestaurant(data);
+		setrestaurant(fetchPost());
 	}, [counter]);
 
 	return (
