@@ -17,12 +17,8 @@ export const getMenu = async (req, res) => {
 	try {
 		// if (mongoose.Types.ObjectId.isValid(id))
 		// 	return res.status(404).json(`No store with id: ${id}`);
-
 		const Menu = await MenuItem.find({ barId: id });
-
 		if (!Menu) return res.status(401).json(`No items currently on menu`);
-
-		console.log(Menu);
 		res.status(200).json(Menu);
 	} catch (error) {
 		res.status(400).res(error);
@@ -36,13 +32,16 @@ export const addItem = async (req, res) => {
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(404).send(`No store with id ${id}`);
 	}
-	await Bar.findByIdAndUpdate(
-		id,
-		{ $push: { menuItem: result } },
-		{ new: true }
-	);
-	// console.log(result);
-	res.json(result);
+
+	///////old schema
+	// await Bar.findByIdAndUpdate(
+	// 	id,
+	// 	{ $push: { menuItem: result } },
+	// 	{ new: true }
+	// );
+
+	console.log(result);
+	// res.json(result);
 };
 
 export const editItem = async (req, res) => {
@@ -52,23 +51,25 @@ export const editItem = async (req, res) => {
 		return res.status(404).send(`No post with id: ${id}`);
 	}
 
-	await Bar.findOneAndUpdate(
-		////checking doc id first ad then menuItem id ////////
-		///The $elemMatch operator matches documents that contain an array field with at least one element that matches all the specified query criteria.//
-		{ _id: id, menuItem: { $elemMatch: { _id: result.itemId } } },
-		{
-			//prettier-ignore
-			$set: {
-				////$set sets the element from the array//
-				"menuItem.$.itemName": result.itemName,
-				"menuItem.$.vol": result.vol,
-				"menuItem.$.price": result.price,
-				// "menuItem._id":result.itemId,
-			},
-		},
-		{ new: true }
-	);
-	res.json(result);
+	// await Bar.findOneAndUpdate(
+	// 	////checking doc id first ad then menuItem id ////////
+	// 	///The $elemMatch operator matches documents that contain an array field with at least one element that matches all the specified query criteria.//
+	// 	{ _id: id, menuItem: { $elemMatch: { _id: result.itemId } } },
+	// 	{
+	// 		//prettier-ignore
+	// 		$set: {
+	// 			////$set sets the element from the array//
+	// 			"menuItem.$.itemName": result.itemName,
+	// 			"menuItem.$.vol": result.vol,
+	// 			"menuItem.$.price": result.price,
+	// 			// "menuItem._id":result.itemId,
+	// 		},
+	// 	},
+	// 	{ new: true }
+	// );
+
+	console.log(result);
+	// res.json(result);
 };
 
 export const DeleteItem = async (req, res) => {
@@ -78,11 +79,14 @@ export const DeleteItem = async (req, res) => {
 		return res.status(404).send(`No item with id: ${id}`);
 	}
 	////$pull pulls the element from the array//
-	await Bar.findByIdAndUpdate(
-		{ _id: id, menuItem: { $elemMatch: { _id: itemId } } },
-		//prettier-ignore
-		{ "$pull": { "menuItem": { "_id": itemId } } },
-		{ safe: true, multi: true }
-	);
+	// await Bar.findByIdAndUpdate(
+	// 	{ _id: id, menuItem: { $elemMatch: { _id: itemId } } },
+	// 	//prettier-ignore
+	// 	{ "$pull": { "menuItem": { "_id": itemId } } },
+	// 	{ safe: true, multi: true }
+	// );
+
+	console.log(itemId);
+
 	res.json({ message: `Item deleted succesful` });
 };

@@ -6,6 +6,7 @@ const Api = axios.create({ baseURL: "http://localhost:5000" });
 
 // const url = "http://localhost:5000";
 
+////gets all restaurants////
 export const fetchPost = async () => {
 	const { data } = await Api.get("/post");
 	return data;

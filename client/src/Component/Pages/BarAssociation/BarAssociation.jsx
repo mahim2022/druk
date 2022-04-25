@@ -8,14 +8,28 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea, Button, Paper } from "@mui/material";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import { AddPopOver } from "../../Form/form";
-import { DeleteItem } from "../../Api";
+import { DeleteItem, fetchMenu, fetchPost } from "../../Api";
 import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
 import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 export const BarAssociation = () => {
 	const params = useParams();
-	const [restaurant] = useContext(RestaurantState);
-	const barData = restaurant[params.idx];
+	const [barData, setBarData] = useState([]);
+	const [menuItem, setMenuItem] = useState([]);
+	// const [restaurant] = useContext(RestaurantState);
+	useEffect(async () => {
+		const resultBar = await fetchPost();
+		const resultMenu = await fetchMenu(params.idx);
+
+		resultBar.map((cur) => {
+			if (cur._id === params.idx) {
+				setBarData(cur);
+			}
+		});
+		setMenuItem(resultMenu);
+	}, []);
+
 	const [counter, setCounter] = useContext(DataCounter);
 
 	///////popover////
@@ -66,7 +80,7 @@ export const BarAssociation = () => {
 				{/* popover//////////////////////////////////////////////////////////// */}
 				{/* Contains forms and submit mechanism */}
 				<AddPopOver popOverType="add" barId={barData._id}></AddPopOver>
-				{barData.menuItem.map((cur, index) => {
+				{menuItem.map((cur, index) => {
 					return (
 						<Paper key={index} elevation={3} style={{ marginTop: "20px" }}>
 							<div
@@ -89,7 +103,7 @@ export const BarAssociation = () => {
 											vol={cur.vol}
 											itemName={cur.itemName}
 											itemId={cur._id}
-											barId={barData._id}
+											barId={cur.barId}
 											popOverType="edit"
 										></AddPopOver>
 									</div>

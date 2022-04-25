@@ -1,22 +1,22 @@
 import { Container, Paper, TextField, Button } from "@mui/material";
 import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { fetchPost } from "../../Api";
 import { RestaurantState } from "../../States/RestaurantState";
 
 export const OwnerLogin = () => {
 	const navigate = useNavigate();
 	const [data, setdata] = useState("");
-	const [restaurant, setrestaurant] = useContext(RestaurantState);
 	let barNames = ["KingFisher", "Eram"];
-	// useEffect(() => {
-	// 	restaurant.map((cur) => barNames.push(cur.barName));
-	// }, []);
-	const handleSubmit = (e) => {
+
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		restaurant.map((cur, index) => {
+		const result = await fetchPost();
+		result.map((cur, index) => {
 			if (cur.barName.toLowerCase() === data.toLowerCase()) {
-				navigate(`/bar/${index}`);
+				navigate(`/bar/${cur._id}`);
 			}
+			// console.log(result);
 		});
 	};
 
