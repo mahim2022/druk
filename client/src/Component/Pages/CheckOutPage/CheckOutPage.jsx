@@ -51,7 +51,9 @@ export const CheckOutPage = () => {
 		e.preventDefault();
 		if (!localStorage.getItem("Profile")) {
 			navigate("/customersignin");
-		} else console.log("Loggedun");
+		} else {
+			navigate("/paymentPage");
+		}
 	};
 	if (cartItems.length === 0) {
 		return (

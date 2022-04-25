@@ -10,6 +10,7 @@ import { CheckOutPage } from "../Pages/CheckOutPage/CheckOutPage";
 import { CustomerSignIn } from "../Pages/CustomerSignIn/CustomerSignIn";
 import { useState, useEffect } from "react";
 import decode from "jwt-decode";
+import { PaymentPage } from "../Pages/Payment Page/PaymentPage";
 
 export const Main = () => {
 	const [currentUser, setCurrentUser] = useState(
@@ -36,6 +37,7 @@ export const Main = () => {
 				<Route path="ownerlogin" element={<OwnerLogin />} />
 				<Route path="checkoutpage" element={<CheckOutPage />} />
 				<Route path="customersignin" element={<CustomerSignIn />} />
+				<Route path="paymentpage" element={<PaymentPage />} />
 			</Routes>
 		</div>
 	);

@@ -21,7 +21,8 @@ import {
 import { useEffect } from "react";
 import { Cart } from "../Cart/Cart";
 
-const pages = ["SignIn", "Pricing", "Blog"];
+const Profile = localStorage.getItem("Profile");
+const pages = [Profile ? "SignOut" : "SignIn", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const ResponsiveAppBar = () => {
@@ -40,7 +41,7 @@ const ResponsiveAppBar = () => {
 		setAnchorElNav(null);
 		if (page === "SignIn") {
 			navigate("customersignin");
-		}
+		} else localStorage.clear(Profile);
 	};
 
 	const handleCloseUserMenu = () => {
