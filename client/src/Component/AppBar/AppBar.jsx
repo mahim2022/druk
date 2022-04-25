@@ -15,15 +15,17 @@ import { fetchPost } from "../Api";
 import {
 	unstable_HistoryRouter,
 	useLocation,
+	useNavigate,
 	useParams,
 } from "react-router-dom";
 import { useEffect } from "react";
 import { Cart } from "../Cart/Cart";
 
-const pages = ["Products", "Pricing", "Blog"];
+const pages = ["SignIn", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 const ResponsiveAppBar = () => {
+	const navigate = useNavigate();
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -34,18 +36,20 @@ const ResponsiveAppBar = () => {
 		setAnchorElUser(event.currentTarget);
 	};
 
-	const handleCloseNavMenu = () => {
+	const handleCloseNavMenu = (page) => {
 		setAnchorElNav(null);
+		if (page === "SignIn") {
+			navigate("customersignin");
+		}
 	};
 
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
 	};
 
-	const onSubmit = async (e) => {
+	const onSubmit = (e) => {
 		e.preventDefault();
-		const { data } = await fetchPost();
-		console.log(data);
+		navigate("/customer");
 	};
 
 	////doesnot render appbar on certain pages///
@@ -97,7 +101,7 @@ const ResponsiveAppBar = () => {
 							}}
 						>
 							{pages.map((page) => (
-								<MenuItem key={page} onClick={handleCloseNavMenu}>
+								<MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
 									<Typography textAlign="center">{page}</Typography>
 								</MenuItem>
 							))}
@@ -110,7 +114,7 @@ const ResponsiveAppBar = () => {
 						sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
 						onClick={(e) => onSubmit(e)}
 					>
-						LOGO
+						DRUK
 					</Typography>
 					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 						{pages.map((page) => (

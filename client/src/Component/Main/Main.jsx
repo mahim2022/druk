@@ -8,8 +8,22 @@ import { StartPage } from "../Pages/StartPage/StartPage";
 import { OwnerLogin } from "../Pages/BarOwnerLoginPage/OwnerLogin";
 import { CheckOutPage } from "../Pages/CheckOutPage/CheckOutPage";
 import { CustomerSignIn } from "../Pages/CustomerSignIn/CustomerSignIn";
+import { useState, useEffect } from "react";
+import decode from "jwt-decode";
 
 export const Main = () => {
+	const [currentUser, setCurrentUser] = useState(
+		JSON.parse(localStorage.getItem("Profile"))
+	);
+	useEffect(() => {
+		if (currentUser.token) {
+			const decodedToken = decode(currentUser.token);
+			if (decodedToken.exp * 1000 < new Date().getTime()) {
+				localStorage.clear();
+			}
+		}
+	}, [currentUser]);
+
 	return (
 		<div>
 			<ResponsiveAppBar></ResponsiveAppBar>

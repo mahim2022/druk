@@ -4,8 +4,10 @@ import { useContext, useState, useEffect } from "react";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const CheckOutPage = () => {
+	const navigate = useNavigate();
 	const [cartItems, setcartItems] = useContext(CartItemState);
 	const [counter, setcounter] = useState(false);
 	const [price, setprice] = useState(0);
@@ -44,7 +46,13 @@ export const CheckOutPage = () => {
 		setcartItems(newArray);
 		setcounter(!counter);
 	};
-	useEffect(() => {}, [cartItems]);
+
+	const handleOrderNow = (e) => {
+		e.preventDefault();
+		if (!localStorage.getItem("Profile")) {
+			navigate("/customersignin");
+		} else console.log("Loggedun");
+	};
 	if (cartItems.length === 0) {
 		return (
 			<>
@@ -122,7 +130,12 @@ export const CheckOutPage = () => {
 						}}
 					>
 						<Typography>Total Price:{price} tk</Typography>
-						<Button variant="contained">
+						<Button
+							variant="contained"
+							onClick={(e) => {
+								handleOrderNow(e);
+							}}
+						>
 							<Typography>Order Now</Typography>
 						</Button>
 					</Paper>

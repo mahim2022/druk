@@ -45,8 +45,12 @@ export const addItem = async (req, res) => {
 		barId: id,
 	});
 
-	await newItem.save();
-	res.json(newItem);
+	try {
+		await newItem.save();
+		res.status(200).json(newitem);
+	} catch (error) {
+		res.status(401).json(error);
+	}
 };
 
 export const editItem = async (req, res) => {
