@@ -42,9 +42,9 @@ export const AddPopOver = (props) => {
 		if (props.popOverType === "add") {
 			const result = await addItem(props.barId, data);
 		} else {
-			const itemId = props.itemId;
-			const finalResult = { ...data, itemId };
-			const result = await editItem(props.barId, finalResult);
+			// const itemId = props.itemId;
+			// const finalResult = { ...data, itemId };
+			const result = await editItem(props.itemId, data);
 		}
 		setCounter(!counter);
 		setdata({ itemName: "", vol: "", price: "" });

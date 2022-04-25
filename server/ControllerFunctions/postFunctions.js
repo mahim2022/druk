@@ -21,7 +21,7 @@ export const getMenu = async (req, res) => {
 		if (!Menu) return res.status(401).json(`No items currently on menu`);
 		res.status(200).json(Menu);
 	} catch (error) {
-		res.status(400).res(error);
+		res.status(400).json(error);
 	}
 };
 
@@ -40,15 +40,20 @@ export const addItem = async (req, res) => {
 	// 	{ new: true }
 	// );
 
-	console.log(result);
-	// res.json(result);
+	const newItem = new MenuItem({
+		...result,
+		barId: id,
+	});
+
+	await newItem.save();
+	res.json(newItem);
 };
 
 export const editItem = async (req, res) => {
 	const { id } = req.params; ////DocumentId//BarId
 	const result = req.body; ////this contains subdocument id or itemid
 	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res.status(404).send(`No post with id: ${id}`);
+		return res.status(404).send(`No Item with id: ${id}`);
 	}
 
 	// await Bar.findOneAndUpdate(
@@ -68,16 +73,28 @@ export const editItem = async (req, res) => {
 	// 	{ new: true }
 	// );
 
-	console.log(result);
+	try {
+		await MenuItem.findByIdAndUpdate(id, {
+			itemName: result.itemName,
+			vol: result.vol,
+			price: result.price,
+		});
+		res.status(200).json(result);
+	} catch (error) {
+		res.status(400).json(error);
+	}
+
+	// console.log(id);
+
+	// console.log(result);
 	// res.json(result);
 };
 
 export const DeleteItem = async (req, res) => {
-	const { id } = req.params;
 	const { itemId } = req.params;
-	if (!mongoose.Types.ObjectId.isValid(id)) {
-		return res.status(404).send(`No item with id: ${id}`);
-	}
+	// if (!mongoose.Types.ObjectId.isValid(id)) {
+	// 	return res.status(404).send(`No item with id: ${id}`);
+	// }
 	////$pull pulls the element from the array//
 	// await Bar.findByIdAndUpdate(
 	// 	{ _id: id, menuItem: { $elemMatch: { _id: itemId } } },
@@ -85,8 +102,13 @@ export const DeleteItem = async (req, res) => {
 	// 	{ "$pull": { "menuItem": { "_id": itemId } } },
 	// 	{ safe: true, multi: true }
 	// );
+	try {
+		await MenuItem.findByIdAndRemove(itemId);
+		res.status(200).json({ message: "Delete Successful" });
+	} catch (error) {
+		res.status(400).json(error);
+	}
+	// console.log(itemId);
 
-	console.log(itemId);
-
-	res.json({ message: `Item deleted succesful` });
+	// res.json({ message: `Item deleted succesful` });
 };

@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 
 export const BarAssociation = () => {
+	const [counter, setCounter] = useContext(DataCounter);
 	const params = useParams();
 	const [barData, setBarData] = useState([]);
 	const [menuItem, setMenuItem] = useState([]);
@@ -28,9 +29,7 @@ export const BarAssociation = () => {
 			}
 		});
 		setMenuItem(resultMenu);
-	}, []);
-
-	const [counter, setCounter] = useContext(DataCounter);
+	}, [counter]);
 
 	///////popover////
 	const [anchorEl, setAnchorEl] = useState(null);
@@ -46,7 +45,7 @@ export const BarAssociation = () => {
 
 	const handleDelete = async (e, itemId) => {
 		e.preventDefault(e);
-		const result = await DeleteItem(barData._id, itemId);
+		const result = await DeleteItem(itemId);
 		setCounter(!counter);
 	};
 
@@ -103,7 +102,6 @@ export const BarAssociation = () => {
 											vol={cur.vol}
 											itemName={cur.itemName}
 											itemId={cur._id}
-											barId={cur.barId}
 											popOverType="edit"
 										></AddPopOver>
 									</div>

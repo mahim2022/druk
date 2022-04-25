@@ -14,6 +14,6 @@ router.get("/", getBar);
 router.get("/menu/:id", getMenu);
 router.patch("/add/:id", addItem);
 router.patch("/edit/:id", editItem);
-router.delete("/delete/:id/:itemId", DeleteItem);
+router.delete("/delete/:itemId", DeleteItem);
 
 export default router;

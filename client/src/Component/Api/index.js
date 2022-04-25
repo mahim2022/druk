@@ -25,8 +25,8 @@ export const editItem = (id, newItem) => {
 	return Api.patch(`/post/edit/${id}`, newItem);
 };
 
-export const DeleteItem = (id, itemId) => {
-	return Api.delete(`/post/delete/${id}/${itemId}`);
+export const DeleteItem = (itemId) => {
+	return Api.delete(`/post/delete/${itemId}`);
 };
 
 //////////User routes/////
