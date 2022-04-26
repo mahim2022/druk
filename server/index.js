@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 
 mongoose
 	.connect(
-		"mongodb+srv://mahim2022:bzmrlKd1EN6a2ZZq@Cluster0.tpcgh.mongodb.net/Druk?retryWrites=true&w=majority"
+		"mongodb+srv://mahim2022:M8354211m@Cluster0.tpcgh.mongodb.net/Druk?retryWrites=true&w=majority"
 	)
 	.then(() =>
 		app.listen(port, () => {

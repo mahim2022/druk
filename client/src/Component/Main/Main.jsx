@@ -17,8 +17,8 @@ export const Main = () => {
 		JSON.parse(localStorage.getItem("Profile"))
 	);
 	useEffect(() => {
-		if (currentUser.token) {
-			const decodedToken = decode(currentUser.token);
+		if (currentUser?.token) {
+			const decodedToken = decode(currentUser?.token);
 			if (decodedToken.exp * 1000 < new Date().getTime()) {
 				localStorage.clear();
 			}
