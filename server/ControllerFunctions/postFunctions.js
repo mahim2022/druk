@@ -1,4 +1,4 @@
-import { Bar } from "../SchemaModel/RestaurantsSchema.js";
+import { Bar, OrderItem, OrderList } from "../SchemaModel/RestaurantsSchema.js";
 import mongoose from "mongoose";
 import { MenuItem } from "../SchemaModel/RestaurantsSchema.js";
 // const mongoose = require("mongoose");
@@ -115,4 +115,21 @@ export const DeleteItem = async (req, res) => {
 	// console.log(itemId);
 
 	// res.json({ message: `Item deleted succesful` });
+};
+
+export const processOrder = async (req, res) => {
+	const result = req.body;
+	const newOrder = new OrderList({
+		customerId: result.customerId,
+		total: result.total,
+		orderDate: new Date().toLocaleString(),
+	});
+	try {
+		const final = await newOrder.save();
+		result.items.forEach((cur) => (cur.orderId = final._id));
+		const success = await OrderItem.insertMany(result.items);
+		res.status(200).json(success);
+	} catch (error) {
+		res.status(400).json(error);
+	}
 };

@@ -42,3 +42,8 @@ export const SignIn = (data) => {
 		return error.response.status;
 	});
 };
+
+///processing orders//
+export const order = (data) => {
+	return Api.post("/post/order", data);
+};

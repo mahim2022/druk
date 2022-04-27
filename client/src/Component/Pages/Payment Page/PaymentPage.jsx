@@ -6,6 +6,7 @@ import { AddressPopOver } from "./AddressPopOver";
 import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { CartItemState } from "../../States/CartItemState/CartItemState";
+import { order } from "../../Api";
 
 export const PaymentPage = () => {
 	const [cartItems] = useContext(CartItemState);
@@ -27,6 +28,17 @@ export const PaymentPage = () => {
 	//     e.preventDefault();
 
 	// }
+
+	const handleSubmit = async (e) => {
+		const { result } = JSON.parse(localStorage.getItem("Profile"));
+		const customerId = result._id;
+		let items = [];
+		cartItems.map((cur) => {
+			items.push({ itemId: cur._id, count: cur.count });
+		});
+		const data = { items, total, customerId };
+		await order(data);
+	};
 
 	return (
 		<>
@@ -110,6 +122,16 @@ export const PaymentPage = () => {
 						);
 					})}
 					<Typography>Total:{total}TK</Typography>
+				</Paper>
+				<Paper elevation={3} style={{ padding: "10px", marginTop: "10px" }}>
+					<Button
+						onClick={(e) => handleSubmit(e)}
+						variant="contained"
+						color="error"
+						style={{ width: "100%" }}
+					>
+						Confirm Order
+					</Button>
 				</Paper>
 			</Container>
 		</>

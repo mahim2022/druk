@@ -11,5 +11,18 @@ const menuItem = new mongoose.Schema({
 	price: { type: mongoose.Schema.Types.Number },
 });
 
+const orderItemSchema = new mongoose.Schema({
+	orderId: { type: mongoose.Schema.Types.ObjectId },
+	itemId: { type: mongoose.Schema.Types.ObjectId },
+	count: { type: mongoose.Schema.Types.Number },
+});
+const orderListSchema = new mongoose.Schema({
+	customerId: { type: mongoose.Schema.Types.ObjectId },
+	orderDate: { type: mongoose.Schema.Types.Date },
+	total: { type: mongoose.Schema.Types.Number },
+});
+
 export const Bar = mongoose.model("Bar", barModel);
 export const MenuItem = mongoose.model("MenuItem", menuItem);
+export const OrderItem = mongoose.model("OrderItem", orderItemSchema);
+export const OrderList = mongoose.model("OrderList", orderListSchema);
