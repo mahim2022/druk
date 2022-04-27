@@ -13,17 +13,15 @@ export const BarOrder = () => {
 		setInvoice(data);
 	}, []);
 	return (
-		<Container>
-			BarOrders
-			<Container>
-				{invoice.map((cur) => {
-					return (
-						<Paper elevation={3} style={{ padding: "10px" }}>
-							<Typography>ID:{cur.customerId}</Typography>
-							<Typography>Time:{cur.orderDate}</Typography>
-							<Typography>Payment Type:{cur.PaymentType}</Typography>
-							<Typography>Total:{cur.total}</Typography>
-							{/* <div
+		<Container maxWidth="sm">
+			{invoice.map((cur) => {
+				return (
+					<Paper elevation={3} style={{ padding: "10px", width: "100%" }}>
+						<Typography>ID: {cur.customerId}</Typography>
+						<Typography>Time: {cur.orderDate}</Typography>
+						<Typography>Payment Type: {cur.PaymentType}</Typography>
+						<Typography>Total: {cur.total}TK</Typography>
+						{/* <div
 								style={{
 									display: "flex",
 									flexDirection: "row",
@@ -35,6 +33,7 @@ export const BarOrder = () => {
 								<Typography>Count</Typography>
 								<Typography>VolumeML</Typography>
 							</div> */}
+						<Paper elevation={4} style={{ padding: "5px" }}>
 							{cur.items.map((cur) => {
 								return (
 									<div
@@ -52,9 +51,9 @@ export const BarOrder = () => {
 								);
 							})}
 						</Paper>
-					);
-				})}
-			</Container>
+					</Paper>
+				);
+			})}
 		</Container>
 	);
 };
