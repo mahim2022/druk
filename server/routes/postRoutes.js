@@ -5,6 +5,7 @@ import {
 	DeleteItem,
 	editItem,
 	getBar,
+	getBarOrders,
 	getMenu,
 	processOrder,
 } from "../ControllerFunctions/postFunctions.js";
@@ -17,4 +18,5 @@ router.patch("/add/:id", addItem);
 router.patch("/edit/:id", editItem);
 router.delete("/delete/:itemId", DeleteItem);
 router.post("/order", processOrder);
+router.get("/getbarorders/:id", getBarOrders);
 export default router;

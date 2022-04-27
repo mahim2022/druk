@@ -47,3 +47,7 @@ export const SignIn = (data) => {
 export const order = (data) => {
 	return Api.post("/post/order", data);
 };
+
+export const getBarOrder = (id) => {
+	return Api.get(`/post/getbarorders/${id}`);
+};

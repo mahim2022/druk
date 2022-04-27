@@ -1,4 +1,4 @@
-import { Bar, OrderItem, OrderList } from "../SchemaModel/RestaurantsSchema.js";
+import { Bar, OrderList } from "../SchemaModel/RestaurantsSchema.js";
 import mongoose from "mongoose";
 import { MenuItem } from "../SchemaModel/RestaurantsSchema.js";
 // const mongoose = require("mongoose");
@@ -28,7 +28,6 @@ export const getMenu = async (req, res) => {
 export const addItem = async (req, res) => {
 	const { id } = req.params;
 	const result = req.body;
-
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(404).send(`No store with id ${id}`);
 	}
@@ -46,8 +45,8 @@ export const addItem = async (req, res) => {
 	});
 
 	try {
-		await newItem.save();
-		res.status(200).json(newitem);
+		const success = await newItem.save();
+		res.status(200).json(success);
 	} catch (error) {
 		res.status(401).json(error);
 	}
@@ -118,17 +117,30 @@ export const DeleteItem = async (req, res) => {
 };
 
 export const processOrder = async (req, res) => {
-	const result = req.body;
+	let result = req.body;
+	console.log(result);
 	const newOrder = new OrderList({
+		barId: result.barId,
 		customerId: result.customerId,
 		total: result.total,
+		address: result.address,
+		paymentType: result.paymentType,
 		orderDate: new Date().toLocaleString(),
+		items: result.items,
 	});
 	try {
 		const final = await newOrder.save();
-		result.items.forEach((cur) => (cur.orderId = final._id));
-		const success = await OrderItem.insertMany(result.items);
-		res.status(200).json(success);
+		res.status(200).json(final);
+	} catch (error) {
+		res.status(400).json(error);
+	}
+};
+
+export const getBarOrders = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const result = await OrderList.find({ id });
+		res.status(200).json(result);
 	} catch (error) {
 		res.status(400).json(error);
 	}

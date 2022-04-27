@@ -12,6 +12,7 @@ import { DeleteItem, fetchMenu, fetchPost } from "../../Api";
 import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { BarOrder } from "../Bar Orders/BarOrders";
 
 export const BarAssociation = () => {
 	const [counter, setCounter] = useContext(DataCounter);
@@ -76,6 +77,7 @@ export const BarAssociation = () => {
 						</CardContent>
 					</CardActionArea>
 				</Card>
+				<BarOrder></BarOrder>
 				{/* popover//////////////////////////////////////////////////////////// */}
 				{/* Contains forms and submit mechanism */}
 				<AddPopOver popOverType="add" barId={barData._id}></AddPopOver>

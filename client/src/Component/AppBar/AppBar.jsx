@@ -21,11 +21,10 @@ import {
 import { useEffect } from "react";
 import { Cart } from "../Cart/Cart";
 
-const Profile = localStorage.getItem("Profile");
-const pages = [Profile ? "SignOut" : "SignIn", "Pricing", "Blog"];
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 const ResponsiveAppBar = () => {
+	const Profile = localStorage.getItem("Profile");
+	const pages = [Profile ? "SignOut" : "SignIn", "Pricing", "Blog"];
+	const settings = ["Profile", "Account", "Dashboard", "Logout"];
 	const navigate = useNavigate();
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -41,7 +40,8 @@ const ResponsiveAppBar = () => {
 		setAnchorElNav(null);
 		if (page === "SignIn") {
 			navigate("customersignin");
-		} else localStorage.clear(Profile);
+		}
+		if (page === "SignOut") localStorage.clear(Profile);
 	};
 
 	const handleCloseUserMenu = () => {
@@ -124,7 +124,7 @@ const ResponsiveAppBar = () => {
 								onClick={handleCloseNavMenu}
 								sx={{ my: 2, color: "white", display: "block" }}
 							>
-								{page}
+								<Typography>{page}</Typography>
 							</Button>
 						))}
 					</Box>

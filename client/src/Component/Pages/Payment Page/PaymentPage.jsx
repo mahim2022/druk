@@ -30,14 +30,23 @@ export const PaymentPage = () => {
 	// }
 
 	const handleSubmit = async (e) => {
+		let items = [];
+		let barId = cartItems[0].barId;
 		const { result } = JSON.parse(localStorage.getItem("Profile"));
 		const customerId = result._id;
-		let items = [];
+
 		cartItems.map((cur) => {
-			items.push({ itemId: cur._id, count: cur.count });
+			items.push({
+				itemId: cur._id,
+				count: cur.count,
+				itemName: cur.itemName,
+				vol: cur.vol,
+			});
 		});
-		const data = { items, total, customerId };
+
+		const data = { items, total, customerId, barId, address, paymentType };
 		await order(data);
+		// console.log(barId);
 	};
 
 	return (
