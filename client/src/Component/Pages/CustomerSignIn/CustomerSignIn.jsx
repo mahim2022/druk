@@ -1,9 +1,10 @@
 import { Button, Container, Paper, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { SignIn, SignUp } from "../../Api";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export const CustomerSignIn = () => {
+	let location = useLocation();
 	let navigate = useNavigate();
 	const [change, setchange] = useState(true);
 	const [data, setdata] = useState({
@@ -41,7 +42,11 @@ export const CustomerSignIn = () => {
 			}
 			if (result.status === 201) {
 				localStorage.setItem("Profile", JSON.stringify(result.data));
-				navigate(`/customer`);
+				if (location?.state?.past === "redirectToPaymentPage") {
+					navigate(`/paymentpage`);
+				} else {
+					navigate(`/customer`);
+				}
 				setErrorRes(0);
 			}
 		}

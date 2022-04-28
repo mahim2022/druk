@@ -50,7 +50,7 @@ export const CheckOutPage = () => {
 	const handleOrderNow = (e) => {
 		e.preventDefault();
 		if (!localStorage.getItem("Profile")) {
-			navigate("/customersignin");
+			navigate("/customersignin", { state: { past: "redirectToPaymentPage" } });
 		} else {
 			navigate("/paymentPage");
 		}

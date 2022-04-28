@@ -7,8 +7,10 @@ import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { CartItemState } from "../../States/CartItemState/CartItemState";
 import { order } from "../../Api";
+import ErrorModal from "./ErrorModal";
 
 export const PaymentPage = () => {
+	const [error, setError] = useState(false);
 	const [cartItems] = useContext(CartItemState);
 	const [total, setTotal] = useState(0);
 	useEffect(() => {
@@ -30,22 +32,31 @@ export const PaymentPage = () => {
 	// }
 
 	const handleSubmit = async (e) => {
-		let items = [];
-		let barId = cartItems[0].barId;
-		const { result } = JSON.parse(localStorage.getItem("Profile"));
-		const customerId = result._id;
+		if (!paymentType || !address) {
+			setError(true);
+		}
+		if (paymentType || address) {
+			let items = [];
+			let barId = cartItems[0].barId;
+			const { result } = JSON.parse(localStorage.getItem("Profile"));
+			const customerId = result._id;
 
-		cartItems.map((cur) => {
-			items.push({
-				itemId: cur._id,
-				count: cur.count,
-				itemName: cur.itemName,
-				vol: cur.vol,
+			cartItems.map((cur) => {
+				items.push({
+					itemId: cur._id,
+					count: cur.count,
+					itemName: cur.itemName,
+					vol: cur.vol,
+				});
 			});
-		});
 
-		const data = { items, total, customerId, barId, address, paymentType };
-		await order(data);
+			const data = { items, total, customerId, barId, address, paymentType };
+			const response = await order(data);
+			if (response) {
+				navigate("/delivery", { state: { data } });
+			}
+		}
+
 		// console.log(barId);
 	};
 
@@ -132,6 +143,10 @@ export const PaymentPage = () => {
 					})}
 					<Typography>Total:{total}TK</Typography>
 				</Paper>
+				<ErrorModal
+					error={error}
+					changeError={(error) => setError(error)}
+				></ErrorModal>
 				<Paper elevation={3} style={{ padding: "10px", marginTop: "10px" }}>
 					<Button
 						onClick={(e) => handleSubmit(e)}

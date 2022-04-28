@@ -67,7 +67,7 @@ export const AddressPopOver = (props) => {
 								name="radio-buttons-group"
 								value={props.payment}
 								onChange={(e) => {
-									props.setPayment(e.target.value);
+									props.setPayment(e.target.value.toString());
 									handleClose();
 								}}
 							>

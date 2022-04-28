@@ -13,13 +13,14 @@ import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounte
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { BarOrder } from "../Bar Orders/BarOrders";
+import Tabs from "./Tabs";
 
 export const BarAssociation = () => {
+	const [view, setView] = useState(false);
 	const [counter, setCounter] = useContext(DataCounter);
 	const params = useParams();
 	const [barData, setBarData] = useState([]);
 	const [menuItem, setMenuItem] = useState([]);
-	// const [restaurant] = useContext(RestaurantState);
 	useEffect(async () => {
 		const resultBar = await fetchPost();
 		const resultMenu = await fetchMenu(params.idx);
@@ -55,7 +56,6 @@ export const BarAssociation = () => {
 	} else {
 		return (
 			<Container maxWidth="sm">
-				<h3>Bar Owner</h3>
 				<Card
 					style={{ marginTop: "20px", marginBottom: "20px" }}
 					sx={{ maxWidth: 400 }}
@@ -77,51 +77,55 @@ export const BarAssociation = () => {
 						</CardContent>
 					</CardActionArea>
 				</Card>
-				<BarOrder></BarOrder>
-				{/* popover//////////////////////////////////////////////////////////// */}
-				{/* Contains forms and submit mechanism */}
-				<AddPopOver popOverType="add" barId={barData._id}></AddPopOver>
-				{menuItem.map((cur, index) => {
-					return (
-						<Paper key={index} elevation={3} style={{ marginTop: "20px" }}>
-							<div
-								style={{
-									display: "flex",
-									flexDirection: "row",
-									justifyContent: "space-between",
-								}}
-							>
-								<img src="" alt="Drink Image"></img>
-								<div>
-									<p>{cur.itemName}</p>
-									<p>Vol:{cur.vol}ML</p>
-									<p>Price:{cur.price} TK</p>
-								</div>
-								<div>
-									<div>
-										<AddPopOver
-											price={cur.price}
-											vol={cur.vol}
-											itemName={cur.itemName}
-											itemId={cur._id}
-											popOverType="edit"
-										></AddPopOver>
+				<Tabs changeView={(view) => setView(view)}></Tabs>
+				{!view ? (
+					<BarOrder></BarOrder>
+				) : (
+					<>
+						<AddPopOver popOverType="add" barId={barData._id}></AddPopOver>
+						{menuItem.map((cur, index) => {
+							return (
+								<Paper key={index} elevation={3} style={{ marginTop: "20px" }}>
+									<div
+										style={{
+											display: "flex",
+											flexDirection: "row",
+											justifyContent: "space-between",
+										}}
+									>
+										<img src="" alt="Drink Image"></img>
+										<div>
+											<p>{cur.itemName}</p>
+											<p>Vol:{cur.vol}ML</p>
+											<p>Price:{cur.price} TK</p>
+										</div>
+										<div>
+											<div>
+												<AddPopOver
+													price={cur.price}
+													vol={cur.vol}
+													itemName={cur.itemName}
+													itemId={cur._id}
+													popOverType="edit"
+												></AddPopOver>
+											</div>
+											<div>
+												<Button
+													variant="text"
+													onClick={(e) => {
+														handleDelete(e, cur._id);
+													}}
+												>
+													<DeleteForeverIcon></DeleteForeverIcon>
+												</Button>
+											</div>
+										</div>
 									</div>
-									<div>
-										<Button
-											variant="text"
-											onClick={(e) => {
-												handleDelete(e, cur._id);
-											}}
-										>
-											<DeleteForeverIcon></DeleteForeverIcon>
-										</Button>
-									</div>
-								</div>
-							</div>
-						</Paper>
-					);
-				})}
+								</Paper>
+							);
+						})}
+					</>
+				)}
 			</Container>
 		);
 	}

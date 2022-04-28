@@ -9,14 +9,17 @@ export const BarOrder = () => {
 	const [invoice, setInvoice] = useState([]);
 	useEffect(async () => {
 		const { data } = await getBarOrder(params.idx);
-		console.log(data);
+
 		setInvoice(data);
 	}, []);
 	return (
 		<Container maxWidth="sm">
 			{invoice.map((cur) => {
 				return (
-					<Paper elevation={3} style={{ padding: "10px", width: "100%" }}>
+					<Paper
+						elevation={3}
+						style={{ padding: "10px", width: "100%", marginTop: "10px" }}
+					>
 						<Typography>ID: {cur.customerId}</Typography>
 						<Typography>Time: {cur.orderDate}</Typography>
 						<Typography>Payment Type: {cur.PaymentType}</Typography>
@@ -33,7 +36,7 @@ export const BarOrder = () => {
 								<Typography>Count</Typography>
 								<Typography>VolumeML</Typography>
 							</div> */}
-						<Paper elevation={4} style={{ padding: "5px" }}>
+						<Paper elevation={8} style={{ padding: "5px" }}>
 							{cur.items.map((cur) => {
 								return (
 									<div
@@ -43,9 +46,13 @@ export const BarOrder = () => {
 											justifyContent: "space-between",
 										}}
 									>
-										<Typography>{cur.itemName}</Typography>
+										<Typography style={{ fontWeight: "bolder" }}>
+											{cur.itemName}
+										</Typography>
 
-										<Typography>x{cur.count}</Typography>
+										<Typography style={{ fontWeight: "bolder" }}>
+											x{cur.count}
+										</Typography>
 										<Typography>{cur.vol}ML</Typography>
 									</div>
 								);

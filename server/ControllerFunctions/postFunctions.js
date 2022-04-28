@@ -118,7 +118,6 @@ export const DeleteItem = async (req, res) => {
 
 export const processOrder = async (req, res) => {
 	let result = req.body;
-	console.log(result);
 	const newOrder = new OrderList({
 		barId: result.barId,
 		customerId: result.customerId,
