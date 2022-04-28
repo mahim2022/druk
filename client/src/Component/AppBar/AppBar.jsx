@@ -42,6 +42,9 @@ const ResponsiveAppBar = () => {
 			navigate("customersignin");
 		}
 		if (page === "SignOut") localStorage.clear(Profile);
+		if (pathname === "/bar") {
+			console.log("Bar");
+		}
 	};
 
 	const handleCloseUserMenu = () => {
@@ -134,11 +137,7 @@ const ResponsiveAppBar = () => {
 					</Box>
 
 					<Box sx={{ flexGrow: 0 }}>
-						{pathname === "/checkoutPage" || "/delivery" ? (
-							<></>
-						) : (
-							<Cart></Cart>
-						)}
+						{pathname === "/checkoutPage" ? <></> : <Cart></Cart>}
 					</Box>
 				</Toolbar>
 			</Container>

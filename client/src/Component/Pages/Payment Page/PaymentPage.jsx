@@ -13,6 +13,7 @@ export const PaymentPage = () => {
 	const [error, setError] = useState(false);
 	const [cartItems] = useContext(CartItemState);
 	const [total, setTotal] = useState(0);
+	const [emoji, setEmoji] = useState("");
 	useEffect(() => {
 		let sum = 0;
 		cartItems.map((cur) => (sum += cur.count * cur.price));
@@ -26,10 +27,18 @@ export const PaymentPage = () => {
 	useEffect(() => {
 		if (!user) navigate("/customer");
 	}, [user]);
-	// const editAddress = (e) => {
-	//     e.preventDefault();
 
-	// }
+	useEffect(() => {
+		if (paymentType === "Cash") {
+			setEmoji("💵");
+		}
+		if (paymentType === "Mobile Banking") {
+			setEmoji("📱");
+		}
+		if (paymentType === "Card") {
+			setEmoji("💳");
+		}
+	}, [paymentType]);
 
 	const handleSubmit = async (e) => {
 		if (!paymentType || !address) {
@@ -116,7 +125,10 @@ export const PaymentPage = () => {
 						></AddressPopOver>
 					</div>
 					{paymentType ? (
-						<Typography>{paymentType}</Typography>
+						<Typography>
+							{paymentType}
+							{emoji}
+						</Typography>
 					) : (
 						<Typography>Select Payment Method</Typography>
 					)}

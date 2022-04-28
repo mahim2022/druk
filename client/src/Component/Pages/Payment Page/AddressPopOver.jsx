@@ -72,19 +72,19 @@ export const AddressPopOver = (props) => {
 								}}
 							>
 								<FormControlLabel
-									value="Cash💵"
+									value="Cash"
 									control={<Radio />}
 									label="Cash💵"
 								/>
 								<FormControlLabel
-									value="Mobile Banking 📱"
+									value="Mobile Banking"
 									control={<Radio />}
 									label="Mobile Banking 📱"
 								/>
 								<FormControlLabel
-									value="Card 💳"
+									value="Card"
 									control={<Radio />}
-									label="Card 💳"
+									label="Card"
 								/>
 							</RadioGroup>
 						</FormControl>

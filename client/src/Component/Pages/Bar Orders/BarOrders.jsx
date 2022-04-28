@@ -13,13 +13,10 @@ export const BarOrder = () => {
 		setInvoice(data);
 	}, []);
 	return (
-		<Container maxWidth="sm">
+		<>
 			{invoice.map((cur) => {
 				return (
-					<Paper
-						elevation={3}
-						style={{ padding: "10px", width: "100%", marginTop: "10px" }}
-					>
+					<Paper elevation={3} style={{ padding: "10px", marginTop: "10px" }}>
 						<Typography>ID: {cur.customerId}</Typography>
 						<Typography>Time: {cur.orderDate}</Typography>
 						<Typography>Payment Type: {cur.PaymentType}</Typography>
@@ -61,6 +58,6 @@ export const BarOrder = () => {
 					</Paper>
 				);
 			})}
-		</Container>
+		</>
 	);
 };

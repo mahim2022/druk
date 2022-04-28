@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 export const DeliveryPage = () => {
 	const location = useLocation();
 	const items = location.state.data.items;
-	console.log(location.state.data.items);
 	if (!items) {
 		return <>Error</>;
 	}

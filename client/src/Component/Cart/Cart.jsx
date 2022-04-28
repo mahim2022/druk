@@ -8,9 +8,10 @@ import { Paper } from "@mui/material";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export function Cart() {
+	const location = useLocation();
 	let navigate = useNavigate();
 	const [cartItems, setcartItems] = React.useContext(CartItemState);
 	const [counter, setcounter] = React.useState(false);
@@ -59,6 +60,12 @@ export function Cart() {
 	/////////Update state on Change///////
 	React.useEffect(() => {}, [counter]);
 
+	if (location.pathname === "/delivery") {
+		return <></>;
+	}
+	if (location.pathname.slice(0, 4) === "/bar") {
+		return <></>;
+	}
 	return (
 		<div>
 			<Button aria-describedby={id} variant="contained" onClick={handleClick}>
