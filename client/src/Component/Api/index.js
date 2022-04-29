@@ -51,3 +51,11 @@ export const order = (data) => {
 export const getBarOrder = (id) => {
 	return Api.get(`/post/getbarorders/${id}`);
 };
+
+export const processedOrder = (id, status) => {
+	return Api.post(`/post/processedOrder/${id}`, status);
+};
+
+export const checkOrderStatus = (id) => {
+	return Api.get(`/post/checkorderstatus/${id}`);
+};

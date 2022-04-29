@@ -1,8 +1,15 @@
 import { Container, Paper, Typography } from "@mui/material";
 import "@fontsource/roboto/400.css";
 import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
+import { checkOrderStatus } from "../../Api";
 
 export const DeliveryPage = () => {
+	useEffect(async () => {
+		const { result } = JSON.parse(localStorage.getItem("Profile"));
+		await checkOrderStatus(result._id);
+	}, []);
+
 	const location = useLocation();
 	const items = location.state.data.items;
 	if (!items) {
@@ -35,6 +42,7 @@ export const DeliveryPage = () => {
 						{items.map((cur, idx) => {
 							return (
 								<div
+									key={cur}
 									style={{
 										display: "flex",
 										flexDirection: "row",

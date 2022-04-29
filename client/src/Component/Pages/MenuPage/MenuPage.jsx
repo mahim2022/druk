@@ -14,10 +14,18 @@ import { Button, CardActionArea, CardActions } from "@mui/material";
 import { CartItemState } from "../../States/CartItemState/CartItemState";
 import { fetchMenu } from "../../Api";
 import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
+import { io } from "socket.io-client";
 
 export const MenuPage = () => {
-	// let menu = [];
-	const [counter] = useContext(DataCounter);
+	const [counter, setCounter] = useState(true);
+	////////socketio/////////
+	useEffect(() => {
+		const socket = io("http://localhost:4000");
+		socket.on("menuUpdate", () => {
+			setCounter(!counter);
+		});
+	});
+
 	const [menu, setmenu] = useState([]);
 	let params = useParams();
 	const [cartItem, setcartItem] = useContext(CartItemState);

@@ -4,9 +4,9 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import userRoutes from "./routes/UserRoutes.js";
-// const express = require("express");
-// const cors = require("cors");
-// const bodyParser = require("body-parser");
+import { Server } from "socket.io";
+import { MenuItem, OrderList } from "./SchemaModel/RestaurantsSchema.js";
+
 const app = express();
 const port = 5000;
 
@@ -44,3 +44,14 @@ mongoose
 	.catch((error) =>
 		console.log(`Mongo db is disconnected with error=>{${error}}`)
 	);
+
+const io = new Server(4000, { cors: { origin: ["http://localhost:3000"] } });
+
+io.on("connection", (socket) => {
+	MenuItem.watch().on("change", (change) => {
+		socket.emit("menuUpdate");
+	});
+	OrderList.watch().on("change", (change) => {
+		socket.emit("newOrder");
+	});
+});

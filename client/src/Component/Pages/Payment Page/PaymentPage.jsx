@@ -139,6 +139,7 @@ export const PaymentPage = () => {
 						return (
 							<>
 								<div
+									key={cur}
 									style={{
 										display: "flex",
 										flexDirection: "row",

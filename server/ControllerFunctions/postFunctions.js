@@ -1,4 +1,8 @@
-import { Bar, OrderList } from "../SchemaModel/RestaurantsSchema.js";
+import {
+	Bar,
+	OrderList,
+	ProcessedOrder,
+} from "../SchemaModel/RestaurantsSchema.js";
 import mongoose from "mongoose";
 import { MenuItem } from "../SchemaModel/RestaurantsSchema.js";
 // const mongoose = require("mongoose");
@@ -11,6 +15,10 @@ export const getBar = async (req, res) => {
 		res.status(400).json(error);
 	}
 };
+
+// MenuItem.watch().on("change", (change) => {
+// 	console.log(change);
+// });
 
 export const getMenu = async (req, res) => {
 	const { id } = req.params;
@@ -31,14 +39,12 @@ export const addItem = async (req, res) => {
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return res.status(404).send(`No store with id ${id}`);
 	}
-
 	///////old schema
 	// await Bar.findByIdAndUpdate(
 	// 	id,
 	// 	{ $push: { menuItem: result } },
 	// 	{ new: true }
 	// );
-
 	const newItem = new MenuItem({
 		...result,
 		barId: id,
@@ -116,7 +122,7 @@ export const DeleteItem = async (req, res) => {
 	// res.json({ message: `Item deleted succesful` });
 };
 
-export const processOrder = async (req, res) => {
+export const invoice = async (req, res) => {
 	let result = req.body;
 	const newOrder = new OrderList({
 		barId: result.barId,
@@ -124,7 +130,7 @@ export const processOrder = async (req, res) => {
 		total: result.total,
 		address: result.address,
 		paymentType: result.paymentType,
-		orderDate: new Date().toLocaleString(),
+		// orderDate: new Date().toLocaleString(),
 		items: result.items,
 	});
 	try {
@@ -143,4 +149,24 @@ export const getBarOrders = async (req, res) => {
 	} catch (error) {
 		res.status(400).json(error);
 	}
+};
+
+export const ProccesOrder = async (req, res) => {
+	const { id } = req.params;
+	const { orderStatus } = req.body;
+	const invoice = new ProcessedOrder({
+		invoiceId: id,
+		orderStatus: orderStatus,
+	});
+	try {
+		const result = await invoice.save();
+		await OrderList.findByIdAndRemove(id);
+		res.status(200).json(result);
+	} catch (error) {
+		res.status(400).json(error);
+	}
+};
+
+export const checkOrderStatus = async (req, res) => {
+	console.log("success");
 };
