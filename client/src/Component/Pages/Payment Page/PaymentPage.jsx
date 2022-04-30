@@ -62,11 +62,9 @@ export const PaymentPage = () => {
 			const data = { items, total, customerId, barId, address, paymentType };
 			const response = await order(data);
 			if (response) {
-				navigate("/delivery", { state: { data } });
+				navigate("/delivery", { state: { result: response.data } });
 			}
 		}
-
-		// console.log(barId);
 	};
 
 	return (
@@ -135,11 +133,11 @@ export const PaymentPage = () => {
 				</Paper>
 				<Paper elevation={3} style={{ padding: "10px", marginTop: "10px" }}>
 					<Typography>Summary</Typography>
-					{cartItems.map((cur) => {
+					{cartItems.map((cur, idx) => {
 						return (
 							<>
 								<div
-									key={cur}
+									key={idx}
 									style={{
 										display: "flex",
 										flexDirection: "row",

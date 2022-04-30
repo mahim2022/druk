@@ -24,7 +24,7 @@ export const MenuPage = () => {
 		socket.on("menuUpdate", () => {
 			setCounter(!counter);
 		});
-	});
+	}, []);
 
 	const [menu, setmenu] = useState([]);
 	let params = useParams();
@@ -75,12 +75,19 @@ export const MenuPage = () => {
 							<Grid item xs={2} sm={4} md={4} key={index}>
 								<Card sx={{ maxWidth: 345, maxHeight: 200 }}>
 									<CardActionArea>
-										<CardMedia
+										{/* <CardMedia
 											component="img"
-											height="90"
-											image="/static/images/cards/contemplative-reptile.jpg"
+											height="100"
+											image={cur.image}
 											alt="green iguana"
-										/>
+											style={{ width: "40%", height: "50%" }}
+										/> */}
+										<Container
+											style={{ display: "grid", placeItems: "center" }}
+										>
+											<img src={cur.image} style={{ height: "100px" }}></img>
+										</Container>
+
 										<CardContent>
 											<Typography gutterBottom variant="h7" component="div">
 												{cur.itemName}

@@ -5,7 +5,11 @@ import bodyParser from "body-parser";
 import mongoose from "mongoose";
 import userRoutes from "./routes/UserRoutes.js";
 import { Server } from "socket.io";
-import { MenuItem, OrderList } from "./SchemaModel/RestaurantsSchema.js";
+import {
+	MenuItem,
+	OrderList,
+	ProcessedOrder,
+} from "./SchemaModel/RestaurantsSchema.js";
 
 const app = express();
 const port = 5000;
@@ -53,5 +57,8 @@ io.on("connection", (socket) => {
 	});
 	OrderList.watch().on("change", (change) => {
 		socket.emit("newOrder");
+	});
+	ProcessedOrder.watch().on("change", (change) => {
+		socket.emit("orderUpdate");
 	});
 });

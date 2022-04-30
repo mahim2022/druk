@@ -11,10 +11,16 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import { addItem, editItem } from "../Api";
 import { DataCounter } from "../States/RestaurantDataUpdateCounter/DataCounter";
 import SettingsIcon from "@mui/icons-material/Settings";
+import FileBase64 from "react-file-base64";
 
 export const AddPopOver = (props) => {
 	const [counter, setCounter] = useContext(DataCounter);
-	const [data, setdata] = useState({ itemName: "", vol: "", price: "" });
+	const [data, setdata] = useState({
+		itemName: "",
+		vol: "",
+		price: "",
+		image: "",
+	});
 	//////popover mechanism////////
 	const [anchorEl, setAnchorEl] = useState(null);
 	const handleClick = (event) => {
@@ -42,19 +48,12 @@ export const AddPopOver = (props) => {
 		if (props.popOverType === "add") {
 			const result = await addItem(props.barId, data);
 		} else {
-			// const itemId = props.itemId;
-			// const finalResult = { ...data, itemId };
 			const result = await editItem(props.itemId, data);
 		}
 		setCounter(!counter);
 		setdata({ itemName: "", vol: "", price: "" });
 		handleClose();
 	};
-
-	// useEffect(() => {
-	// 	console.log(barId.barId);
-	// });
-
 	return (
 		<div>
 			<Button
@@ -68,7 +67,6 @@ export const AddPopOver = (props) => {
 				) : (
 					<SettingsIcon></SettingsIcon>
 				)}
-				{/* <AddIcon></AddIcon> */}
 			</Button>
 			<Popover
 				id={id}
@@ -141,6 +139,11 @@ export const AddPopOver = (props) => {
 								setdata({ ...data, price: Number(e.target.value) });
 							}}
 						/>
+						<FileBase64
+							type="file"
+							multiple={false}
+							onDone={({ base64 }) => setdata({ ...data, image: base64 })}
+						></FileBase64>
 					</div>
 				</Container>
 				<Button

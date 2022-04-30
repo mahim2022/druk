@@ -13,10 +13,9 @@ export const BarOrder = () => {
 		socket.on("newOrder", () => {
 			setCounter(!counter);
 		});
-	});
+	}, []);
 
 	const params = useParams();
-	const [orders, setOrders] = useState({});
 	const [invoice, setInvoice] = useState([]);
 	useEffect(async () => {
 		const { data } = await getBarOrder(params.idx);
@@ -24,10 +23,10 @@ export const BarOrder = () => {
 	}, [counter]);
 	return (
 		<>
-			{invoice.map((cur) => {
+			{invoice.map((cur, idx) => {
 				return (
 					<Paper
-						key={cur}
+						key={idx}
 						elevation={3}
 						style={{ padding: "10px", marginTop: "10px" }}
 					>
@@ -40,7 +39,11 @@ export const BarOrder = () => {
 								<Typography>Total: {cur.total}TK</Typography>
 							</Grid>
 							<Grid item xs={3}>
-								<OrderButtons invoiceId={cur._id}></OrderButtons>
+								<OrderButtons
+									invoiceId={cur._id}
+									counter={counter}
+									setCounter={(counter) => setCounter(counter)}
+								></OrderButtons>
 							</Grid>
 						</Grid>
 						<Paper elevation={8} style={{ padding: "5px" }}>

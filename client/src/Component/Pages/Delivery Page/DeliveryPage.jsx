@@ -1,17 +1,42 @@
 import { Container, Paper, Typography } from "@mui/material";
 import "@fontsource/roboto/400.css";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { checkOrderStatus } from "../../Api";
+import { io } from "socket.io-client";
+import { RejectedOrder } from "./OrderRejected";
 
 export const DeliveryPage = () => {
-	useEffect(async () => {
-		const { result } = JSON.parse(localStorage.getItem("Profile"));
-		await checkOrderStatus(result._id);
-	}, []);
+	const [orderStatus, setOrderStatus] = useState("");
 
+	////////socketio/////////Checking orderStatus dynamically
+	const [counter, setCounter] = useState(true);
+	useEffect(() => {
+		const socket = io("http://localhost:4000");
+		socket.on("orderUpdate", () => {
+			setCounter(!counter);
+		});
+	}, []);
 	const location = useLocation();
-	const items = location.state.data.items;
+
+	/////Cheking for order update////
+	useEffect(async () => {
+		const { data } = await checkOrderStatus(location.state?.result?._id);
+		if (data) {
+			setOrderStatus(data.orderStatus);
+		}
+	}, [counter]);
+
+	if (orderStatus === "rejected") {
+		return (
+			<>
+				<RejectedOrder></RejectedOrder>
+			</>
+		);
+	}
+
+	////geting order from useLocation///
+	const items = location.state?.result?.items;
 	if (!items) {
 		return <>Error</>;
 	}
@@ -28,6 +53,11 @@ export const DeliveryPage = () => {
 					<Typography variant="h5">
 						Maybe take a few puffs while you wait🌿🚬
 					</Typography>
+					{orderStatus === "sent" ? (
+						<Typography>Your order is enRoute.</Typography>
+					) : (
+						<></>
+					)}
 					<iframe
 						src="https://giphy.com/embed/cmCHuk53AiTmOwBXlw"
 						// width="350"
@@ -42,7 +72,7 @@ export const DeliveryPage = () => {
 						{items.map((cur, idx) => {
 							return (
 								<div
-									key={cur}
+									key={idx}
 									style={{
 										display: "flex",
 										flexDirection: "row",

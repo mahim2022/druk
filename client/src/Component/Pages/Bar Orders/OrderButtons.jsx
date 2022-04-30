@@ -3,15 +3,20 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 import { processedOrder } from "../../Api";
 
-export const OrderButtons = ({ invoiceId }) => {
+export const OrderButtons = (props) => {
 	const handleClick = async (e, type) => {
 		if (type === "sent") {
-			await processedOrder(invoiceId, { orderStatus: "sent" });
+			await processedOrder(props.invoiceId, { orderStatus: "sent" });
 		}
+
 		if (type === "rejected") {
-			await processedOrder(invoiceId, { orderStatus: "rejected" });
+			await processedOrder(props.invoiceId, {
+				orderStatus: "rejected",
+			});
 		}
+		props.setCounter(!props.counter);
 	};
+
 	return (
 		<>
 			<Button

@@ -14,6 +14,7 @@ const UserSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	order: { type: mongoose.Schema.Types.ObjectId },
 });
 
 export const User = mongoose.model("User", UserSchema);

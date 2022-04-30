@@ -23,8 +23,8 @@ import { Cart } from "../Cart/Cart";
 
 const ResponsiveAppBar = () => {
 	const Profile = localStorage.getItem("Profile");
-	const pages = [Profile ? "SignOut" : "SignIn", "Pricing", "Blog"];
-	const settings = ["Profile", "Account", "Dashboard", "Logout"];
+	const pages = [Profile ? "SignOut" : "SignIn", "Orders", "Profile"];
+
 	const navigate = useNavigate();
 	const [anchorElNav, setAnchorElNav] = React.useState(null);
 	const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -41,9 +41,17 @@ const ResponsiveAppBar = () => {
 		if (page === "SignIn") {
 			navigate("customersignin");
 		}
-		if (page === "SignOut") localStorage.clear(Profile);
-		if (pathname === "/bar") {
-			console.log("Bar");
+		if (page === "SignOut") {
+			localStorage.clear(Profile);
+		}
+
+		const user = JSON.parse(localStorage.getItem("Profile"));
+
+		if (page === "Orders" && !user) {
+			navigate("customersignin");
+		}
+		if (page === "Orders" && user) {
+			console.log("orders");
 		}
 	};
 
@@ -125,15 +133,17 @@ const ResponsiveAppBar = () => {
 						DRUK
 					</Typography>
 					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-						{pages.map((page) => (
-							<Button
-								key={page}
-								onClick={handleCloseNavMenu}
-								sx={{ my: 2, color: "white", display: "block" }}
-							>
-								<Typography>{page}</Typography>
-							</Button>
-						))}
+						{pages.map((page) => {
+							return (
+								<Button
+									key={page}
+									onClick={handleCloseNavMenu}
+									sx={{ my: 2, color: "white", display: "block" }}
+								>
+									<Typography>{page}</Typography>
+								</Button>
+							);
+						})}
 					</Box>
 
 					<Box sx={{ flexGrow: 0 }}>

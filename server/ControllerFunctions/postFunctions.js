@@ -87,6 +87,7 @@ export const editItem = async (req, res) => {
 			itemName: result.itemName,
 			vol: result.vol,
 			price: result.price,
+			image: result.image,
 		});
 		res.status(200).json(result);
 	} catch (error) {
@@ -130,7 +131,7 @@ export const invoice = async (req, res) => {
 		total: result.total,
 		address: result.address,
 		paymentType: result.paymentType,
-		// orderDate: new Date().toLocaleString(),
+
 		items: result.items,
 	});
 	try {
@@ -154,19 +155,26 @@ export const getBarOrders = async (req, res) => {
 export const ProccesOrder = async (req, res) => {
 	const { id } = req.params;
 	const { orderStatus } = req.body;
+
 	const invoice = new ProcessedOrder({
 		invoiceId: id,
 		orderStatus: orderStatus,
 	});
 	try {
 		const result = await invoice.save();
-		await OrderList.findByIdAndRemove(id);
 		res.status(200).json(result);
+		await OrderList.findByIdAndRemove(id);
 	} catch (error) {
 		res.status(400).json(error);
 	}
 };
 
 export const checkOrderStatus = async (req, res) => {
-	console.log("success");
+	const { id } = req.params;
+	try {
+		const result = await ProcessedOrder.findOne({ invoiceId: id });
+		res.status(200).json(result);
+	} catch (error) {
+		res.status(400).json(error);
+	}
 };

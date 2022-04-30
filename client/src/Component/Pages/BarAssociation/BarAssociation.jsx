@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import { useEffect } from "react";
 import { BarOrder } from "../Bar Orders/BarOrders";
 import Tabs from "./Tabs";
+import { BarCard } from "./BarCard";
 
 export const BarAssociation = () => {
 	const [view, setView] = useState(false);
@@ -24,7 +25,6 @@ export const BarAssociation = () => {
 	useEffect(async () => {
 		const resultBar = await fetchPost();
 		const resultMenu = await fetchMenu(params.idx);
-
 		resultBar.map((cur) => {
 			if (cur._id === params.idx) {
 				setBarData(cur);
@@ -56,27 +56,7 @@ export const BarAssociation = () => {
 	} else {
 		return (
 			<Container maxWidth="sm">
-				<Card
-					style={{ marginTop: "20px", marginBottom: "20px" }}
-					sx={{ maxWidth: 400 }}
-				>
-					<CardActionArea>
-						<CardMedia
-							component="img"
-							height="60"
-							image="/static/images/cards/contemplative-reptile.jpg"
-							alt="green iguana"
-						/>
-						<CardContent>
-							<Typography gutterBottom variant="h5" component="div">
-								{barData.barName}
-							</Typography>
-							<Typography variant="body2" color="text.secondary">
-								{barData.location}
-							</Typography>
-						</CardContent>
-					</CardActionArea>
-				</Card>
+				<BarCard barData={barData}></BarCard>
 				<Tabs changeView={(view) => setView(view)}></Tabs>
 				{!view ? (
 					<BarOrder></BarOrder>
@@ -93,7 +73,11 @@ export const BarAssociation = () => {
 											justifyContent: "space-between",
 										}}
 									>
-										<img src="" alt="Drink Image"></img>
+										<img
+											src={cur.image}
+											alt="Drink Image"
+											style={{ width: "150px", height: "127px" }}
+										></img>
 										<div>
 											<p>{cur.itemName}</p>
 											<p>Vol:{cur.vol}ML</p>

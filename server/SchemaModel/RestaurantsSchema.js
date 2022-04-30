@@ -9,6 +9,7 @@ const menuItem = new mongoose.Schema({
 	itemName: { type: String },
 	vol: { type: mongoose.Schema.Types.Number },
 	price: { type: mongoose.Schema.Types.Number },
+	image: { type: String },
 });
 
 const orderListSchema = new mongoose.Schema(
@@ -34,15 +35,15 @@ const orderListSchema = new mongoose.Schema(
 
 const ProcessedOrderSchema = new mongoose.Schema(
 	{
-		orderId: { type: mongoose.Schema.Types.ObjectId },
+		invoiceId: { type: mongoose.Schema.Types.ObjectId },
 		orderStatus: { type: String },
 	},
 	{ timestamps: true }
 );
+ProcessedOrderSchema.index({ createdAt: 1 }, { expireAfterSeconds: 120 });
 
 export const Bar = mongoose.model("Bar", barModel);
 export const MenuItem = mongoose.model("MenuItem", menuItem);
-// export const OrderItem = mongoose.model("OrderItem", orderItemSchema);
 export const OrderList = mongoose.model("OrderList", orderListSchema);
 export const ProcessedOrder = mongoose.model(
 	"ProcessedOrder",
