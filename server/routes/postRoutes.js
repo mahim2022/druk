@@ -15,7 +15,7 @@ import {
 const router = express.Router();
 
 router.get("/", getBar);
-router.get("/menu/:id", getMenu);
+router.post("/menu/:id", getMenu);
 router.patch("/add/:id", addItem);
 router.patch("/edit/:id", editItem);
 router.delete("/delete/:itemId", DeleteItem);

@@ -15,12 +15,13 @@ import { useEffect } from "react";
 import { BarOrder } from "../Bar Orders/BarOrders";
 import Tabs from "./Tabs";
 import { BarCard } from "./BarCard";
+import { Loader } from "../../Loader/Loader";
 
 export const BarAssociation = () => {
 	const [view, setView] = useState(false);
 	const [counter, setCounter] = useContext(DataCounter);
 	const params = useParams();
-	const [barData, setBarData] = useState([]);
+	const [barData, setBarData] = useState(null);
 	const [menuItem, setMenuItem] = useState([]);
 	useEffect(async () => {
 		const resultBar = await fetchPost();
@@ -52,7 +53,11 @@ export const BarAssociation = () => {
 	};
 
 	if (!barData) {
-		return <p>Server Error</p>;
+		return (
+			<Container style={{ position: "relative", top: "30vh" }}>
+				<Loader></Loader>
+			</Container>
+		);
 	} else {
 		return (
 			<Container maxWidth="sm">
@@ -63,51 +68,61 @@ export const BarAssociation = () => {
 				) : (
 					<>
 						<AddPopOver popOverType="add" barId={barData._id}></AddPopOver>
-						{menuItem.map((cur, index) => {
-							return (
-								<Paper key={index} elevation={3} style={{ marginTop: "20px" }}>
-									<div
-										style={{
-											display: "flex",
-											flexDirection: "row",
-											justifyContent: "space-between",
-										}}
+						{!menuItem ? (
+							<Container style={{ position: "relative", top: "30vh" }}>
+								<Loader></Loader>
+							</Container>
+						) : (
+							menuItem.map((cur, index) => {
+								return (
+									<Paper
+										key={index}
+										elevation={3}
+										style={{ marginTop: "20px" }}
 									>
-										<img
-											src={cur.image}
-											alt="Drink Image"
-											style={{ width: "150px", height: "127px" }}
-										></img>
-										<div>
-											<p>{cur.itemName}</p>
-											<p>Vol:{cur.vol}ML</p>
-											<p>Price:{cur.price} TK</p>
-										</div>
-										<div>
+										<div
+											style={{
+												display: "flex",
+												flexDirection: "row",
+												justifyContent: "space-between",
+											}}
+										>
+											<img
+												src={cur.image}
+												alt="Drink Image"
+												style={{ width: "150px", height: "127px" }}
+											></img>
 											<div>
-												<AddPopOver
-													price={cur.price}
-													vol={cur.vol}
-													itemName={cur.itemName}
-													itemId={cur._id}
-													popOverType="edit"
-												></AddPopOver>
+												<p>{cur.itemName}</p>
+												<p>Vol:{cur.vol}ML</p>
+												<p>Price:{cur.price} TK</p>
 											</div>
 											<div>
-												<Button
-													variant="text"
-													onClick={(e) => {
-														handleDelete(e, cur._id);
-													}}
-												>
-													<DeleteForeverIcon></DeleteForeverIcon>
-												</Button>
+												<div>
+													<AddPopOver
+														price={cur.price}
+														vol={cur.vol}
+														itemName={cur.itemName}
+														itemId={cur._id}
+														popOverType="edit"
+													></AddPopOver>
+												</div>
+												<div>
+													<Button
+														variant="text"
+														onClick={(e) => {
+															handleDelete(e, cur._id);
+														}}
+													>
+														<DeleteForeverIcon></DeleteForeverIcon>
+													</Button>
+												</div>
 											</div>
 										</div>
-									</div>
-								</Paper>
-							);
-						})}
+									</Paper>
+								);
+							})
+						)}
 					</>
 				)}
 			</Container>

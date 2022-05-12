@@ -8,10 +8,7 @@ import {
 
 export const BarCard = ({ barData }) => {
 	return (
-		<Card
-			style={{ marginTop: "20px", marginBottom: "20px" }}
-			sx={{ maxWidth: 400 }}
-		>
+		<Card style={{ marginTop: "20px", marginBottom: "20px" }}>
 			<CardActionArea>
 				<CardMedia
 					component="img"

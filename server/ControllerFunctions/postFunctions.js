@@ -22,14 +22,26 @@ export const getBar = async (req, res) => {
 
 export const getMenu = async (req, res) => {
 	const { id } = req.params;
-	try {
-		// if (mongoose.Types.ObjectId.isValid(id))
-		// 	return res.status(404).json(`No store with id: ${id}`);
-		const Menu = await MenuItem.find({ barId: id });
-		if (!Menu) return res.status(401).json(`No items currently on menu`);
-		res.status(200).json(Menu);
-	} catch (error) {
-		res.status(400).json(error);
+	const result = req.body;
+	if (result?.type === "all") {
+		try {
+			const Menu = await MenuItem.find();
+			if (!Menu) return res.status(401).json(`No items currently on menu`);
+			res.status(200).json(Menu);
+		} catch (error) {
+			res.status(400).json(error);
+		}
+	} else {
+		try {
+			if (!mongoose.Types.ObjectId.isValid(id))
+				return res.status(404).json(`No store with id: ${id}`);
+
+			const Menu = await MenuItem.find({ barId: id });
+			if (!Menu) return res.status(401).json(`No items currently on menu`);
+			res.status(200).json(Menu);
+		} catch (error) {
+			res.status(400).json(error);
+		}
 	}
 };
 

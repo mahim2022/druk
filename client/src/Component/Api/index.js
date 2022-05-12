@@ -12,8 +12,8 @@ export const fetchPost = async () => {
 	return data;
 };
 
-export const fetchMenu = async (id) => {
-	const { data } = await Api.get(`post/menu/${id}`);
+export const fetchMenu = async (id, type) => {
+	const { data } = await Api.post(`post/menu/${id}`, type);
 	return data;
 };
 

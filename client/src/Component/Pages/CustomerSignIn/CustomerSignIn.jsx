@@ -73,6 +73,19 @@ export const CustomerSignIn = () => {
 	useEffect(() => {
 		setErrorRes(0);
 	}, [change]);
+
+	const handleDemo = async () => {
+		const result = await SignIn({
+			email: "naimulmushfiq@gmail.com",
+			password: 123456789,
+		});
+		if (result?.status === 201) {
+			localStorage.setItem("Profile", JSON.stringify(result.data));
+			navigate(`/customer`);
+			setErrorRes(0);
+		}
+	};
+
 	return (
 		<>
 			<Container>
@@ -173,8 +186,16 @@ export const CustomerSignIn = () => {
 							onClick={(e) => {
 								handleSubmit(e, change ? "signup" : "signin");
 							}}
+							style={{ minWidth: "80px" }}
 						>
 							{change ? <span>SignUp</span> : <span>SignIn</span>}
+						</Button>
+						<Button
+							variant="contained"
+							style={{ margin: "10px", minWidth: "85px" }}
+							onClick={handleDemo}
+						>
+							Demo
 						</Button>
 					</div>
 					<Button variant="text" onClick={(e) => handleSwitch(e)}>

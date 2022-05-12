@@ -2,8 +2,21 @@ import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import { Paper } from "@mui/material";
 import "./Carousel.css";
+import { useState, useEffect } from "react";
+import { fetchMenu } from "../Api";
+import { Container } from "@mui/material";
+import { Loader } from "../Loader/Loader";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import AddToCartModal from "./AddToCartModal";
 
 export const FoodCarousel = () => {
+	const [menu, setMenu] = useState(null);
+
+	useEffect(async () => {
+		const data = await fetchMenu(0, { type: "all" });
+		setMenu(data);
+	}, []);
+
 	const responsive = {
 		superLargeDesktop: {
 			// the naming can be any, depends on you.
@@ -24,6 +37,16 @@ export const FoodCarousel = () => {
 			// slidesToSlide: 2,
 		},
 	};
+
+	const [counter, setCounter] = useState(null);
+
+	if (!menu) {
+		return (
+			<Container style={{}}>
+				<Loader></Loader>
+			</Container>
+		);
+	}
 	return (
 		<Carousel
 			swipeable={true}
@@ -32,8 +55,8 @@ export const FoodCarousel = () => {
 			responsive={responsive}
 			// ssr={true} // means to render carousel on server-side.
 			infinite={true}
-			autoPlay={true}
-			autoPlaySpeed={2000}
+			// autoPlay={true}
+			// autoPlaySpeed={2000}
 			keyBoardControl={true}
 			customTransition="all .5"
 			transitionDuration={500}
@@ -43,18 +66,32 @@ export const FoodCarousel = () => {
 			// dotListClass="custom-dot-list-style"
 			itemClass="carousel-item-padding-40-px"
 		>
-			<div>
-				<Paper elevation={12} className="jD"></Paper>
-			</div>
-			<div>
-				<Paper elevation={12} className="jD"></Paper>
-			</div>
-			<div>
-				<Paper elevation={12} className="jD"></Paper>
-			</div>
-			<div>
-				<Paper elevation={12} className="jD"></Paper>
-			</div>
+			{menu.map((cur) => {
+				return (
+					<Paper
+						elevation={6}
+						className="jD"
+						key={cur._id}
+						onClick={() => {
+							setCounter(true);
+						}}
+					>
+						<AddToCartModal
+							counter={counter}
+							changeCounter={(counter) => setCounter(counter)}
+						></AddToCartModal>
+						<img
+							src={cur.image}
+							style={{
+								maxWidth: "100%",
+								maxHeight: "100%",
+								margin: "auto",
+								display: "block",
+							}}
+						></img>
+					</Paper>
+				);
+			})}
 		</Carousel>
 	);
 };
