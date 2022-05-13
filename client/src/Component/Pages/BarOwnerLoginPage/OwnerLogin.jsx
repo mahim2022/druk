@@ -20,6 +20,10 @@ export const OwnerLogin = () => {
 		});
 	};
 
+	const handleDemo = () => {
+		navigate(`/bar/624b5656b896acb45b01fdb8`);
+	};
+
 	return (
 		<Container style={{ backgroundColor: "black", height: "100vh" }}>
 			<Container
@@ -56,6 +60,13 @@ export const OwnerLogin = () => {
 							style={{ marginTop: "10px" }}
 						>
 							Submit
+						</Button>
+						<Button
+							onClick={() => handleDemo()}
+							variant="outlined"
+							style={{ marginTop: "10px", marginLeft: "10px" }}
+						>
+							Demo
 						</Button>
 					</div>
 				</Paper>
