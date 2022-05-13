@@ -5,6 +5,7 @@ import {
 } from "../SchemaModel/RestaurantsSchema.js";
 import mongoose from "mongoose";
 import { MenuItem } from "../SchemaModel/RestaurantsSchema.js";
+import { User } from "../SchemaModel/UsersScehma/UsersSchema.js";
 // const mongoose = require("mongoose");
 
 export const getBar = async (req, res) => {
@@ -135,6 +136,10 @@ export const DeleteItem = async (req, res) => {
 	// res.json({ message: `Item deleted succesful` });
 };
 
+//////////////////////////////////////////////////////////////////////////////////
+///////////orderFunction///////////////
+//////////////////////////////////////////////////////////////////////////////
+
 export const invoice = async (req, res) => {
 	let result = req.body;
 	const newOrder = new OrderList({
@@ -143,12 +148,19 @@ export const invoice = async (req, res) => {
 		total: result.total,
 		address: result.address,
 		paymentType: result.paymentType,
-
 		items: result.items,
+		orderStatus: result.orderStatus,
 	});
 	try {
+		////creating invoices///////
 		const final = await newOrder.save();
 		res.status(200).json(final);
+		/////filling orders in user db/////
+		// const userUpdate = await User.findByIdAndUpdate(
+		// 	result.customerId,
+		// 	{ $push: { orders: { orderId: final._id, status: "pending" } } },
+		// 	{ new: true }
+		// );
 	} catch (error) {
 		res.status(400).json(error);
 	}
@@ -166,15 +178,26 @@ export const getBarOrders = async (req, res) => {
 
 export const ProccesOrder = async (req, res) => {
 	const { id } = req.params;
-	const { orderStatus } = req.body;
+	const { orderStatus, items, customerId } = req.body;
+
+	const newItems = [];
+	if (items) {
+		items.map((cur) => {
+			newItems.push({ itemName: cur.itemName, count: cur.count });
+		});
+	}
 
 	const invoice = new ProcessedOrder({
+		customerId: customerId,
 		invoiceId: id,
 		orderStatus: orderStatus,
+		items: newItems,
 	});
 	try {
+		////storing into processed order
 		const result = await invoice.save();
 		res.status(200).json(result);
+		////removing order from orderlist////
 		await OrderList.findByIdAndRemove(id);
 	} catch (error) {
 		res.status(400).json(error);
@@ -186,6 +209,18 @@ export const checkOrderStatus = async (req, res) => {
 	try {
 		const result = await ProcessedOrder.findOne({ invoiceId: id });
 		res.status(200).json(result);
+	} catch (error) {
+		res.status(400).json(error);
+	}
+};
+
+export const CustomerOrders = async (req, res) => {
+	const { id } = req.params;
+	try {
+		const result = await ProcessedOrder.find({ customerId: id });
+		const data = await OrderList.find({ customerId: id });
+
+		res.status(200).json({ result, data });
 	} catch (error) {
 		res.status(400).json(error);
 	}

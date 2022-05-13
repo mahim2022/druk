@@ -51,7 +51,7 @@ const ResponsiveAppBar = () => {
 			navigate("customersignin");
 		}
 		if (page === "Orders" && user) {
-			console.log("orders");
+			navigate("customerorders");
 		}
 	};
 

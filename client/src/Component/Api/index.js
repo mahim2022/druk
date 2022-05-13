@@ -59,3 +59,7 @@ export const processedOrder = (id, status) => {
 export const checkOrderStatus = (id) => {
 	return Api.get(`/post/checkorderstatus/${id}`);
 };
+
+export const customerOrders = (customerId) => {
+	return Api.get(`/post/getuserorders/${customerId}`);
+};

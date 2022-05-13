@@ -3,6 +3,7 @@ import express from "express";
 import {
 	addItem,
 	checkOrderStatus,
+	CustomerOrders,
 	DeleteItem,
 	editItem,
 	getBar,
@@ -23,4 +24,5 @@ router.post("/order", invoice);
 router.get("/getbarorders/:id", getBarOrders);
 router.post("/processedOrder/:id", ProccesOrder);
 router.get("/checkorderstatus/:id", checkOrderStatus);
+router.get("/getuserorders/:id", CustomerOrders);
 export default router;

@@ -32,7 +32,7 @@ export const BarOrder = () => {
 					>
 						<Grid container spacing={2}>
 							<Grid item xs={9}>
-								<Typography>ID: {cur.customerId}</Typography>
+								<Typography>CustomerID: {cur.customerId}</Typography>
 								<Typography>Time: {cur.createdAt}</Typography>
 								{/* <Typography>Payment Type: {cur.paymentType}</Typography>
 								<Typography>Address: {cur.address}</Typography> */}
@@ -41,6 +41,8 @@ export const BarOrder = () => {
 							<Grid item xs={3}>
 								<OrderButtons
 									invoiceId={cur._id}
+									customerId={cur.customerId}
+									items={cur.items}
 									counter={counter}
 									setCounter={(counter) => setCounter(counter)}
 								></OrderButtons>

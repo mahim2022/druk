@@ -14,7 +14,12 @@ const UserSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	order: { type: mongoose.Schema.Types.ObjectId },
+	orders: [
+		{
+			orderId: { type: mongoose.Schema.Types.ObjectId },
+			status: { type: mongoose.Schema.Types.String },
+		},
+	],
 });
 
 export const User = mongoose.model("User", UserSchema);

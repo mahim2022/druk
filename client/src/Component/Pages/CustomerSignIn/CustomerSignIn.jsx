@@ -77,11 +77,15 @@ export const CustomerSignIn = () => {
 	const handleDemo = async () => {
 		const result = await SignIn({
 			email: "naimulmushfiq@gmail.com",
-			password: 123456789,
+			password: "123456789",
 		});
 		if (result?.status === 201) {
 			localStorage.setItem("Profile", JSON.stringify(result.data));
-			navigate(`/customer`);
+			if (location?.state?.past === "redirectToPaymentPage") {
+				navigate(`/paymentpage`);
+			} else {
+				navigate(`/customer`);
+			}
 			setErrorRes(0);
 		}
 	};

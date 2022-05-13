@@ -6,12 +6,18 @@ import { processedOrder } from "../../Api";
 export const OrderButtons = (props) => {
 	const handleClick = async (e, type) => {
 		if (type === "sent") {
-			await processedOrder(props.invoiceId, { orderStatus: "sent" });
+			await processedOrder(props.invoiceId, {
+				orderStatus: "sent",
+				items: props.items,
+				customerId: props.customerId,
+			});
 		}
 
 		if (type === "rejected") {
 			await processedOrder(props.invoiceId, {
 				orderStatus: "rejected",
+				items: props.items,
+				customerId: props.customerId,
 			});
 		}
 		props.setCounter(!props.counter);

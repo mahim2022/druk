@@ -35,12 +35,21 @@ const orderListSchema = new mongoose.Schema(
 
 const ProcessedOrderSchema = new mongoose.Schema(
 	{
+		customerId: { type: mongoose.Schema.Types.ObjectId },
 		invoiceId: { type: mongoose.Schema.Types.ObjectId },
 		orderStatus: { type: String },
+		items: [
+			{
+				itemName: { type: mongoose.Schema.Types.String },
+				count: { type: Number },
+			},
+		],
 	},
 	{ timestamps: true }
 );
-ProcessedOrderSchema.index({ createdAt: 1 }, { expireAfterSeconds: 120 });
+
+///////Automatic deletion after 10 mins///////
+// ProcessedOrderSchema.index({ createdAt: 1 }, { expireAfterSeconds: 1200 });
 
 export const Bar = mongoose.model("Bar", barModel);
 export const MenuItem = mongoose.model("MenuItem", menuItem);

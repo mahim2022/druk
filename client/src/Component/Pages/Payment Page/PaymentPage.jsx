@@ -59,7 +59,15 @@ export const PaymentPage = () => {
 				});
 			});
 
-			const data = { items, total, customerId, barId, address, paymentType };
+			const data = {
+				items,
+				total,
+				customerId,
+				barId,
+				address,
+				paymentType,
+				orderStatus: "pending",
+			};
 			const response = await order(data);
 			if (response) {
 				navigate("/delivery", { state: { result: response.data } });

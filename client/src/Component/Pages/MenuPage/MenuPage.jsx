@@ -16,6 +16,7 @@ import { fetchMenu } from "../../Api";
 import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
 import { io } from "socket.io-client";
 import { Loader } from "../../Loader/Loader";
+import addToCart from "./AddtoCart";
 
 export const MenuPage = () => {
 	const [counter, setCounter] = useState(true);
@@ -36,34 +37,10 @@ export const MenuPage = () => {
 		setmenu(result);
 	}, [counter]);
 
-	const addToCart = (e, cur) => {
-		e.preventDefault();
-		let match = false;
-		let newArray = cartItem;
-		newArray.forEach((curr) => {
-			if (curr._id === cur._id) {
-				curr.count++;
-				match = true;
-			}
-		});
-		if (match) {
-			setcartItem(newArray);
-		}
-		if (!match) {
-			cur.count = 1;
-			setcartItem([...cartItem, cur]);
-		}
+	const AddToCart = (e, cur) => {
+		addToCart(e, cur, cartItem, setcartItem);
 	};
 
-	// if (!menu) {
-	// 	return (
-	// 		<>
-	// 			<Container style={{ top: "30px" }}>
-	// 				<h1>Loading</h1>
-	// 			</Container>
-	// 		</>
-	// 	);
-	// }
 	return (
 		<Container style={{ marginTop: "15px" }}>
 			<h3>Menu</h3>
@@ -114,7 +91,7 @@ export const MenuPage = () => {
 												style={{ postion: "relative", bottom: "28px" }}
 												size="small"
 												color="primary"
-												onClick={(e) => addToCart(e, cur)}
+												onClick={(e) => AddToCart(e, cur)}
 											>
 												Add to Cart
 											</Button>
