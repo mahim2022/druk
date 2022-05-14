@@ -10,9 +10,10 @@ import {
 	OrderList,
 	ProcessedOrder,
 } from "./SchemaModel/RestaurantsSchema.js";
+import "dotenv/config";
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json({ limit: "30mb", extended: "true" }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: "true" }));
@@ -35,21 +36,23 @@ app.get("/", (req, res) => {
 // app.listen(port, () => {
 // 	console.log(`Example app listening on port ${port}`);
 // });
-
+const socketIoPort = process.env.SOCKET_IO_PORT;
 mongoose
-	.connect(
-		"mongodb+srv://mahim2022:M8354211m@Cluster0.tpcgh.mongodb.net/Druk?retryWrites=true&w=majority"
-	)
+	.connect(process.env.CONNECTION_URL)
 	.then(() =>
 		app.listen(port, () => {
-			console.log(`Example app listening on port ${port}`);
+			console.log(
+				`mongooseIndex on port ${port} and socketIo on ${socketIoPort}`
+			);
 		})
 	)
 	.catch((error) =>
 		console.log(`Mongo db is disconnected with error=>{${error}}`)
 	);
 
-const io = new Server(4000, { cors: { origin: ["http://localhost:3000"] } });
+const io = new Server(socketIoPort, {
+	cors: { origin: ["http://localhost:3000"] },
+});
 
 io.on("connection", (socket) => {
 	MenuItem.watch().on("change", (change) => {
