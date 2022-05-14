@@ -40,16 +40,13 @@ export const Restaurants = () => {
 							<CardActionArea>
 								<CardMedia
 									component="img"
-									height="60"
-									image="/static/images/cards/contemplative-reptile.jpg"
+									height="150"
+									image={cur.cover}
 									alt="green iguana"
 								/>
 								<CardContent>
 									<Typography gutterBottom variant="h5" component="div">
-										{cur.barName}
-									</Typography>
-									<Typography variant="body2" color="text.secondary">
-										{cur.location}
+										{cur.barName} , {cur.location}
 									</Typography>
 								</CardContent>
 							</CardActionArea>

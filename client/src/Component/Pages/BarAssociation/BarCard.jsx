@@ -7,21 +7,19 @@ import {
 } from "@mui/material";
 
 export const BarCard = ({ barData }) => {
+	console.log(barData);
 	return (
 		<Card style={{ marginTop: "20px", marginBottom: "20px" }}>
 			<CardActionArea>
 				<CardMedia
 					component="img"
-					height="60"
-					image="/static/images/cards/contemplative-reptile.jpg"
+					height="200"
+					image={barData.cover}
 					alt="green iguana"
 				/>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="div">
-						{barData.barName}
-					</Typography>
-					<Typography variant="body2" color="text.secondary">
-						{barData.location}
+						{barData.barName} , {barData.location}
 					</Typography>
 				</CardContent>
 			</CardActionArea>
