@@ -1,7 +1,9 @@
 import { Container, Button } from "@mui/material";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
 import "./StartPage.css";
+import MainLogo from "./Logo.png";
 
 export const StartPage = () => {
 	const navigate = useNavigate();
@@ -12,13 +14,22 @@ export const StartPage = () => {
 				maxWidth="sm"
 				style={{ backgroundColor: "black", height: "100vh" }}
 			>
+				<Container
+					style={{
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<img src={MainLogo} style={{ width: "200px", height: "200px" }}></img>
+				</Container>
 				<div
 					style={{
 						display: "flex",
 						flexDirection: "column",
 						justifyContent: "center",
-						position: "relative",
-						top: "38vh",
+						// position: "relative",
+						// top: "38vh",
 					}}
 				>
 					<Button

@@ -20,6 +20,25 @@ import {
 } from "react-router-dom";
 import { useEffect } from "react";
 import { Cart } from "../Cart/Cart";
+import { ThemeProvider } from "@mui/material";
+import { createTheme } from "@mui/material";
+
+const theme = createTheme({
+	typography: {
+		fontFamily: [
+			"-apple-system",
+			"BlinkMacSystemFont",
+			'"Segoe UI"',
+			"Roboto",
+			'"Helvetica Neue"',
+			"Arial",
+			"sans-serif",
+			'"Apple Color Emoji"',
+			'"Segoe UI Emoji"',
+			'"Segoe UI Symbol"',
+		].join(","),
+	},
+});
 
 const ResponsiveAppBar = () => {
 	const Profile = localStorage.getItem("Profile");
@@ -53,6 +72,13 @@ const ResponsiveAppBar = () => {
 		if (page === "Orders" && user) {
 			navigate("customerorders");
 		}
+
+		if (page === "Profile" && !user) {
+			navigate("customersignin");
+		}
+		if (page === "Profile" && user) {
+			navigate("customerprofile");
+		}
 	};
 
 	const handleCloseUserMenu = () => {
@@ -66,7 +92,7 @@ const ResponsiveAppBar = () => {
 
 	////doesnot render appbar on certain pages///
 	const { pathname } = useLocation();
-	if (pathname === "/" || pathname === "/ownerlogin") {
+	if (pathname === "/" || pathname === "/ownerlogin" || pathname === "*") {
 		return <></>;
 	}
 	//////////
@@ -123,15 +149,21 @@ const ResponsiveAppBar = () => {
 							</Menu>
 						</Box>
 					)}
-					<Typography
-						variant="h6"
-						noWrap
-						component="div"
-						sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}
-						onClick={(e) => onSubmit(e)}
-					>
-						DRUK
-					</Typography>
+					<ThemeProvider theme={theme}>
+						<Typography
+							variant="h6"
+							noWrap
+							component="div"
+							sx={{
+								fontFamily: "Helvetica Neue",
+								flexGrow: 1,
+								display: { xs: "flex", md: "none" },
+							}}
+							onClick={(e) => onSubmit(e)}
+						>
+							DRÜK🍻
+						</Typography>
+					</ThemeProvider>
 					<Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
 						{pages.map((page) => {
 							return (

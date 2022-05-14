@@ -13,7 +13,8 @@ import decode from "jwt-decode";
 import { PaymentPage } from "../Pages/Payment Page/PaymentPage";
 import { DeliveryPage } from "../Pages/Delivery Page/DeliveryPage";
 import { CustomerOrder } from "../Pages/CustomerOrders/CustomerOrder";
-import { CustomerProfile } from "../Pages/CustomerProfile/CustomerProfile";
+import { CustomerProfile } from "../Pages/Customer/CustomerProfile/CustomerProfile";
+import { ErrorPage } from "../ErrorPage/ErrorPage";
 
 export const Main = () => {
 	const [currentUser, setCurrentUser] = useState(
@@ -44,6 +45,7 @@ export const Main = () => {
 				<Route path="delivery" element={<DeliveryPage />} />
 				<Route path="customerorders" element={<CustomerOrder />} />
 				<Route path="customerprofile" element={<CustomerProfile />} />
+				<Route path="*" element={<ErrorPage />} />
 			</Routes>
 		</div>
 	);
