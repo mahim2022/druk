@@ -1,0 +1,7 @@
+.cartUpdateAlert {
+	width: fit-content;
+	z-index: 1;
+	position: fixed;
+	top: 85vh;
+	/* display: none; */
+}

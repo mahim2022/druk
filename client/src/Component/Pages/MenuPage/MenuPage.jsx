@@ -10,16 +10,19 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions } from "@mui/material";
+import { Button, Collapse, Fade, Slide } from "@mui/material";
 import { CartItemState } from "../../States/CartItemState/CartItemState";
 import { fetchMenu } from "../../Api";
 import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
 import { io } from "socket.io-client";
 import { Loader } from "../../Loader/Loader";
 import addToCart from "./AddtoCart";
+import Alert from "@mui/material/Alert";
+import "./MenuPage.css";
 
 export const MenuPage = () => {
 	const [counter, setCounter] = useState(true);
+	const [animation, setAnimation] = useState(false);
 	////////socketio/////////
 	useEffect(() => {
 		const socket = io("http://localhost:5000");
@@ -35,15 +38,34 @@ export const MenuPage = () => {
 	useEffect(async () => {
 		const result = await fetchMenu(params.idx);
 		setmenu(result);
+		if (result) {
+			setAnimation(true);
+		}
 	}, [counter]);
 
 	const AddToCart = (e, cur) => {
 		addToCart(e, cur, cartItem, setcartItem);
+		setAlert(true);
+		setTimeout(() => {
+			setAlert(false);
+		}, 2000);
 	};
+
+	const [alert, setAlert] = useState(false);
 
 	return (
 		<Container style={{ marginTop: "15px" }}>
 			<h3>Menu</h3>
+			{/* Alert with transition */}
+			<Slide direction="up" in={alert} mountOnEnter unmountOnExit>
+				<Alert
+					severity="success"
+					className="cartUpdateAlert"
+					style={{ backgroundColor: "#66ffc2" }}
+				>
+					<strong>Cart Updated</strong>
+				</Alert>
+			</Slide>
 			<Box sx={{ flexGrow: 1 }}>
 				<Grid
 					container
@@ -58,45 +80,64 @@ export const MenuPage = () => {
 						menu.map((cur, index) => {
 							return (
 								<Grid item xs={2} sm={4} md={4} key={index}>
-									<Card sx={{ maxWidth: 345, maxHeight: 200 }}>
-										<CardActionArea>
-											{/* <CardMedia
-											component="img"
-											height="100"
-											image={cur.image}
-											alt="green iguana"
-											style={{ width: "40%", height: "50%" }}
-										/> */}
-											<Container
-												style={{ display: "grid", placeItems: "center" }}
-											>
-												<img src={cur.image} style={{ height: "100px" }}></img>
-											</Container>
-
-											<CardContent>
-												<Typography gutterBottom variant="h7" component="div">
+									<Slide
+										direction="right"
+										in={animation}
+										mountOnEnter
+										unmountOnExit
+									>
+										<Paper elevation={10}>
+											<Container>
+												<div
+													style={{
+														display: "flex",
+														justifyContent: "center",
+														alignItems: "center",
+													}}
+												>
+													<img
+														src={cur.image}
+														style={{
+															height: "150px",
+														}}
+													></img>
+												</div>
+												<Typography
+													gutterBottom
+													variant="h7"
+													component="div"
+													style={{ fontWeight: "900" }}
+												>
 													{cur.itemName}
 												</Typography>
 												<Typography
-													// style={{ position: "relative", bottom: "0px" }}
 													variant="body2"
 													color="text.secondary"
+													style={{ fontWeight: "600" }}
 												>
 													Volume:{cur.vol}ml Price:{cur.price}tk
 												</Typography>
-											</CardContent>
-										</CardActionArea>
-										<CardActions>
-											<Button
-												style={{ postion: "relative", bottom: "28px" }}
-												size="small"
-												color="primary"
-												onClick={(e) => AddToCart(e, cur)}
-											>
-												Add to Cart
-											</Button>
-										</CardActions>
-									</Card>
+												<div
+													style={{
+														display: "flex",
+														justifyContent: "center",
+														alignItems: "center",
+														paddingBottom: "5px",
+													}}
+												>
+													<Button
+														size="small"
+														color="primary"
+														onClick={(e) => AddToCart(e, cur)}
+														variant="contained"
+														style={{ height: "25px" }}
+													>
+														Add to Cart
+													</Button>
+												</div>
+											</Container>
+										</Paper>
+									</Slide>
 								</Grid>
 							);
 						})

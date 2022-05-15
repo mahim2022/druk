@@ -2,7 +2,7 @@
 	height: 150px;
 
 	background-size: cover;
-	background-image: url(https://mshanken.imgix.net/wso/Articles/2018/NS_health112817_1600.jpg);
+	background-image: url(./HomeCover.svg);
 }
 
 .pickUp {
@@ -14,5 +14,5 @@
 .shop {
 	height: 80px;
 	background-size: 120px, 80px, cover;
-	background-image: url(https://www.plumpiecooks.com/wp-content/uploads/2013/12/glass+tools.jpg);
+	background-image: url(./Glasses.svg);
 }

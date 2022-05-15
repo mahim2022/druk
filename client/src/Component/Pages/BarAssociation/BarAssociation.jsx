@@ -1,4 +1,4 @@
-import { Container } from "@mui/material";
+import { Container, Slide } from "@mui/material";
 import { useContext, useState } from "react";
 import { RestaurantState } from "../../States/RestaurantState";
 import Card from "@mui/material/Card";
@@ -18,6 +18,7 @@ import { BarCard } from "./BarCard";
 import { Loader } from "../../Loader/Loader";
 
 export const BarAssociation = () => {
+	const [animation, setAnimation] = useState(false);
 	const [view, setView] = useState(false);
 	const [counter, setCounter] = useContext(DataCounter);
 	const params = useParams();
@@ -32,6 +33,9 @@ export const BarAssociation = () => {
 			}
 		});
 		setMenuItem(resultMenu);
+		if (resultMenu) {
+			setAnimation(true);
+		}
 	}, [counter]);
 
 	///////popover////
@@ -75,51 +79,58 @@ export const BarAssociation = () => {
 						) : (
 							menuItem.map((cur, index) => {
 								return (
-									<Paper
-										key={index}
-										elevation={3}
-										style={{ marginTop: "20px" }}
+									<Slide
+										direction="up"
+										in={animation}
+										mountOnEnter
+										unmountOnExit
 									>
-										<div
-											style={{
-												display: "flex",
-												flexDirection: "row",
-												justifyContent: "space-between",
-											}}
+										<Paper
+											key={index}
+											elevation={3}
+											style={{ marginTop: "20px" }}
 										>
-											<img
-												src={cur.image}
-												alt="Drink Image"
-												style={{ width: "150px", height: "127px" }}
-											></img>
-											<div>
-												<p>{cur.itemName}</p>
-												<p>Vol:{cur.vol}ML</p>
-												<p>Price:{cur.price} TK</p>
-											</div>
-											<div>
+											<div
+												style={{
+													display: "flex",
+													flexDirection: "row",
+													justifyContent: "space-between",
+												}}
+											>
+												<img
+													src={cur.image}
+													alt="Drink Image"
+													style={{ width: "150px", height: "127px" }}
+												></img>
 												<div>
-													<AddPopOver
-														price={cur.price}
-														vol={cur.vol}
-														itemName={cur.itemName}
-														itemId={cur._id}
-														popOverType="edit"
-													></AddPopOver>
+													<p>{cur.itemName}</p>
+													<p>Vol:{cur.vol}ML</p>
+													<p>Price:{cur.price} TK</p>
 												</div>
 												<div>
-													<Button
-														variant="text"
-														onClick={(e) => {
-															handleDelete(e, cur._id);
-														}}
-													>
-														<DeleteForeverIcon></DeleteForeverIcon>
-													</Button>
+													<div>
+														<AddPopOver
+															price={cur.price}
+															vol={cur.vol}
+															itemName={cur.itemName}
+															itemId={cur._id}
+															popOverType="edit"
+														></AddPopOver>
+													</div>
+													<div>
+														<Button
+															variant="text"
+															onClick={(e) => {
+																handleDelete(e, cur._id);
+															}}
+														>
+															<DeleteForeverIcon></DeleteForeverIcon>
+														</Button>
+													</div>
 												</div>
 											</div>
-										</div>
-									</Paper>
+										</Paper>
+									</Slide>
 								);
 							})
 						)}

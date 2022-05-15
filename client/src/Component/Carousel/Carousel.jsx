@@ -1,6 +1,6 @@
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Paper } from "@mui/material";
+import { Paper, Slide } from "@mui/material";
 import "./Carousel.css";
 import { useState, useEffect } from "react";
 import { fetchMenu } from "../Api";
@@ -11,10 +11,12 @@ import PopOver from "./PopOver.jsx";
 export const FoodCarousel = () => {
 	const [counter, setCounter] = useState(false);
 	const [menu, setMenu] = useState(null);
+	const [animation, setAnimation] = useState(false);
 
 	useEffect(async () => {
 		const data = await fetchMenu(0, { type: "all" });
 		setMenu(data);
+		if (data) setAnimation(true);
 	}, []);
 
 	const responsive = {

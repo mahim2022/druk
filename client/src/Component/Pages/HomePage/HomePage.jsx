@@ -5,7 +5,8 @@ import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import { FoodCarousel } from "../../Carousel/Carousel";
 import "./Homepage.css";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { renderToStaticMarkup } from "react-dom/server";
 
 const Item = styled(Paper)(({ theme }) => ({
 	backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -29,7 +30,6 @@ export const HomePage = () => {
 					style={{ width: "100%" }}
 				/>
 			</Container>
-			{/* Card Menu */}
 			<Container maxWidth="sm">
 				<Box sx={{ flexGrow: 1 }} style={{ marginTop: "15px" }}>
 					<Grid container spacing={2}>
@@ -46,10 +46,10 @@ export const HomePage = () => {
 								</span>
 							</Item>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={6} onClick={() => navigate("/restaurants")}>
 							<Item className="shop"></Item>
 						</Grid>
-						<Grid item xs={6}>
+						<Grid item xs={6} onClick={() => navigate("/restaurants")}>
 							<Item className="pickUp">
 								<div>
 									<span
