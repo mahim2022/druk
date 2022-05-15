@@ -16,7 +16,6 @@ export const OwnerLogin = () => {
 			if (cur.barName.toLowerCase() === data.toLowerCase()) {
 				navigate(`/bar/${cur._id}`);
 			}
-			// console.log(result);
 		});
 	};
 

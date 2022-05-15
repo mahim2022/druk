@@ -12,7 +12,7 @@ export const DeliveryPage = () => {
 	////////socketio/////////Checking orderStatus dynamically
 	const [counter, setCounter] = useState(true);
 	useEffect(() => {
-		const socket = io("http://localhost:4000");
+		const socket = io("http://localhost:5000");
 		socket.on("orderUpdate", () => {
 			setCounter(!counter);
 		});

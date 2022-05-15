@@ -7,7 +7,6 @@ import {
 } from "@mui/material";
 
 export const BarCard = ({ barData }) => {
-	console.log(barData);
 	return (
 		<Card style={{ marginTop: "20px", marginBottom: "20px" }}>
 			<CardActionArea>

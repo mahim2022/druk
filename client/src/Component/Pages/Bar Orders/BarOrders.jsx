@@ -9,7 +9,7 @@ export const BarOrder = () => {
 	const [counter, setCounter] = useState(true);
 	////////socketio/////////
 	useEffect(() => {
-		const socket = io("http://localhost:4000");
+		const socket = io("http://localhost:5000");
 		socket.on("newOrder", () => {
 			setCounter(!counter);
 		});

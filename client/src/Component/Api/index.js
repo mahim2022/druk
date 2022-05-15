@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import { DataCounter } from "../States/RestaurantDataUpdateCounter/DataCounter";
 
-const Api = axios.create({ baseURL: "http://localhost:5000" });
+const Api = axios.create({ baseURL: "https://modpanda.herokuapp.com/" });
 
 // const url = "http://localhost:5000";
 
