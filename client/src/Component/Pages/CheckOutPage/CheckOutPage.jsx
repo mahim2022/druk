@@ -81,7 +81,11 @@ export const CheckOutPage = () => {
 									justifyContent: "space-between",
 								}}
 							>
-								<img src="" alt="image"></img>
+								<img
+									src={cur.image}
+									style={{ width: "100px", height: "100px" }}
+									alt="image"
+								></img>
 								<div>
 									<Typography>Name: {cur.itemName}</Typography>
 									<Typography>Total Price: {cur.count * cur.price}</Typography>

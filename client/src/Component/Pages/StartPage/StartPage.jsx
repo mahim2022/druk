@@ -1,4 +1,4 @@
-import { Container, Button } from "@mui/material";
+import { Container, Button, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -58,6 +58,17 @@ export const StartPage = () => {
 					>
 						Bar Owner
 					</Button>
+				</div>
+				<div
+					className="font-link"
+					style={{
+						color: "white",
+						display: "flex",
+						justifyContent: "center",
+						alignItems: "center",
+					}}
+				>
+					<a>Made With 💝 by Naimul Mushfiq Mahim</a>
 				</div>
 			</Container>
 		</>

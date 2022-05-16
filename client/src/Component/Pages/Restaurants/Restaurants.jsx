@@ -1,17 +1,17 @@
-import { Container } from "@mui/material";
+import { Container, Slide } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import { useContext, useEffect, useState } from "react";
-import { RestaurantState } from "../../States/RestaurantState";
 import { fetchPost } from "../../Api";
 import { useNavigate } from "react-router-dom";
 import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
 import { Loader } from "../../Loader/Loader";
 
 export const Restaurants = () => {
+	const [animation, setAnimation] = useState(false);
 	let navigate = useNavigate();
 	const [counter, setCounter] = useContext(DataCounter);
 	// const [restaurant, setrestaurant] = useContext(RestaurantState);
@@ -19,6 +19,7 @@ export const Restaurants = () => {
 	useEffect(async () => {
 		const result = await fetchPost();
 		setRestaurant(result);
+		if (result) setAnimation(true);
 	}, [counter]);
 
 	return (
@@ -31,26 +32,28 @@ export const Restaurants = () => {
 			) : (
 				restaurant.map((cur, idx) => {
 					return (
-						<Card
-							onClick={() => navigate(`/menu/${cur._id}`)}
-							key={idx}
-							style={{ marginTop: "20px", marginBottom: "20px" }}
-							sx={{ maxWidth: 400 }}
-						>
-							<CardActionArea>
-								<CardMedia
-									component="img"
-									height="150"
-									image={cur.cover}
-									alt="green iguana"
-								/>
-								<CardContent>
-									<Typography gutterBottom variant="h5" component="div">
-										{cur.barName} , {cur.location}
-									</Typography>
-								</CardContent>
-							</CardActionArea>
-						</Card>
+						<Slide direction="up" in={animation} mountOnEnter unmountOnExit>
+							<Card
+								onClick={() => navigate(`/menu/${cur._id}`)}
+								key={idx}
+								style={{ marginTop: "20px", marginBottom: "20px" }}
+								sx={{ maxWidth: 400 }}
+							>
+								<CardActionArea>
+									<CardMedia
+										component="img"
+										height="150"
+										image={cur.cover}
+										alt="green iguana"
+									/>
+									<CardContent>
+										<Typography gutterBottom variant="h5" component="div">
+											{cur.barName} , {cur.location}
+										</Typography>
+									</CardContent>
+								</CardActionArea>
+							</Card>
+						</Slide>
 					);
 				})
 			)}

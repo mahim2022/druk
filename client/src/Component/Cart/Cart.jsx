@@ -68,9 +68,16 @@ export function Cart() {
 	}
 	return (
 		<div>
-			<Button aria-describedby={id} variant="contained" onClick={handleClick}>
-				<ShoppingBagOutlinedIcon></ShoppingBagOutlinedIcon>
-				<Typography>{cartItems.length}</Typography>
+			<Button
+				aria-describedby={id}
+				variant="contained"
+				onClick={handleClick}
+				style={{ backgroundColor: "#343434" }}
+			>
+				<ShoppingBagOutlinedIcon
+					style={{ color: "yellow" }}
+				></ShoppingBagOutlinedIcon>
+				<Typography style={{ color: "yellow" }}>{cartItems.length}</Typography>
 			</Button>
 
 			<Popover
@@ -97,7 +104,11 @@ export function Cart() {
 								justifyContent: "space-between",
 							}}
 						>
-							<img src="" alt="image"></img>
+							<img
+								src={cur.image}
+								alt="image"
+								style={{ height: "100px", width: "100px" }}
+							></img>
 							<div>
 								<Typography>Name: {cur.itemName}</Typography>
 								<Typography>Total Price: {cur.count * cur.price}</Typography>
