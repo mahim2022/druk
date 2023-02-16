@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getBarOrder } from "../../Api";
 import { OrderButtons } from "./OrderButtons";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 
 export const BarOrder = () => {
 	const [counter, setCounter] = useState(true);
 	////////socketio/////////
-	useEffect(() => {
-		const socket = io("http://localhost:5000");
-		socket.on("newOrder", () => {
-			setCounter(!counter);
-		});
-	}, []);
+	// useEffect(() => {
+	// 	const socket = io("http://localhost:5000");
+	// 	socket.on("newOrder", () => {
+	// 		setCounter(!counter);
+	// 	});
+	// }, []);
 	const [animation, setAnimation] = useState(false);
 	const params = useParams();
 	const [invoice, setInvoice] = useState([]);

@@ -14,22 +14,23 @@ import { Button, Collapse, Fade, Slide } from "@mui/material";
 import { CartItemState } from "../../States/CartItemState/CartItemState";
 import { fetchMenu } from "../../Api";
 import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { Loader } from "../../Loader/Loader";
 import addToCart from "./AddtoCart";
 import Alert from "@mui/material/Alert";
 import "./MenuPage.css";
+import vodka from "./vodka.webp";
 
 export const MenuPage = () => {
 	const [counter, setCounter] = useState(true);
 	const [animation, setAnimation] = useState(false);
 	////////socketio/////////
-	useEffect(() => {
-		const socket = io("http://localhost:5000");
-		socket.on("menuUpdate", () => {
-			setCounter(!counter);
-		});
-	}, []);
+	// useEffect(() => {
+	// 	const socket = io("http://localhost:5000");
+	// 	socket.on("menuUpdate", () => {
+	// 		setCounter(!counter);
+	// 	});
+	// }, []);
 
 	const [menu, setmenu] = useState(false);
 	let params = useParams();
@@ -37,7 +38,11 @@ export const MenuPage = () => {
 	////using index of json to get data///
 	useEffect(async () => {
 		const result = await fetchMenu(params.idx);
-		setmenu(result);
+		setmenu((prevResult) => {
+			if (prevResult != result) {
+				return result;
+			}
+		});
 		if (result) {
 			setAnimation(true);
 		}
@@ -96,7 +101,7 @@ export const MenuPage = () => {
 													}}
 												>
 													<img
-														src={cur.image}
+														src={cur.image ? cur.image : vodka}
 														style={{
 															height: "150px",
 														}}

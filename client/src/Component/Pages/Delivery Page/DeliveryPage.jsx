@@ -3,7 +3,7 @@ import "@fontsource/roboto/400.css";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { checkOrderStatus } from "../../Api";
-import { io } from "socket.io-client";
+// import { io } from "socket.io-client";
 import { RejectedOrder } from "./OrderRejected";
 
 export const DeliveryPage = () => {
@@ -11,12 +11,12 @@ export const DeliveryPage = () => {
 
 	////////socketio/////////Checking orderStatus dynamically
 	const [counter, setCounter] = useState(true);
-	useEffect(() => {
-		const socket = io("http://localhost:5000");
-		socket.on("orderUpdate", () => {
-			setCounter(!counter);
-		});
-	}, []);
+	// useEffect(() => {
+	// 	const socket = io("http://localhost:5000");
+	// 	socket.on("orderUpdate", () => {
+	// 		setCounter(!counter);
+	// 	});
+	// }, []);
 	const location = useLocation();
 
 	/////Cheking for order update////

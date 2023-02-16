@@ -7,6 +7,7 @@ import { fetchMenu } from "../Api";
 import { Container } from "@mui/material";
 import { Loader } from "../Loader/Loader";
 import PopOver from "./PopOver.jsx";
+import vodka from "../Pages/MenuPage/vodka.webp";
 
 export const FoodCarousel = () => {
 	const [counter, setCounter] = useState(false);
@@ -81,7 +82,7 @@ export const FoodCarousel = () => {
 							}}
 						>
 							<img
-								src={cur.image}
+								src={cur.image ? cur.image : vodka}
 								style={{
 									maxWidth: "100%",
 									maxHeight: "100%",

@@ -6,6 +6,8 @@ import {
 	Typography,
 } from "@mui/material";
 
+import kingfisher from "./kingfisher.png";
+
 export const BarCard = ({ barData }) => {
 	return (
 		<Card style={{ marginTop: "20px", marginBottom: "20px" }}>
@@ -13,7 +15,7 @@ export const BarCard = ({ barData }) => {
 				<CardMedia
 					component="img"
 					height="200"
-					image={barData.cover}
+					image={barData.cover ? barData.cover : kingfisher}
 					alt="green iguana"
 				/>
 				<CardContent>

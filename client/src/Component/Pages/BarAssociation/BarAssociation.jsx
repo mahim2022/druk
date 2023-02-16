@@ -16,6 +16,7 @@ import { BarOrder } from "../Bar Orders/BarOrders";
 import Tabs from "./Tabs";
 import { BarCard } from "./BarCard";
 import { Loader } from "../../Loader/Loader";
+import vodka from "../MenuPage/vodka.webp";
 
 export const BarAssociation = () => {
 	const [animation, setAnimation] = useState(false);
@@ -80,6 +81,7 @@ export const BarAssociation = () => {
 							menuItem.map((cur, index) => {
 								return (
 									<Slide
+										key={index}
 										direction="up"
 										in={animation}
 										mountOnEnter
@@ -98,7 +100,7 @@ export const BarAssociation = () => {
 												}}
 											>
 												<img
-													src={cur.image}
+													src={cur.image ? cur.image : vodka}
 													alt="Drink Image"
 													style={{ width: "150px", height: "127px" }}
 												></img>

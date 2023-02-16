@@ -20,7 +20,7 @@ export const OwnerLogin = () => {
 	};
 
 	const handleDemo = () => {
-		navigate(`/bar/624b5656b896acb45b01fdb8`);
+		navigate(`/bar/63eddfe509601afb0229bca3`);
 	};
 
 	return (
