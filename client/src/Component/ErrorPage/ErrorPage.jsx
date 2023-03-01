@@ -2,7 +2,7 @@ import { Container } from "@mui/material";
 import { Navigate, useNavigate } from "react-router-dom";
 import "./ErrorPage.css";
 
-export const ErrorPage = () => {
+const ErrorPage = () => {
 	const navigate = useNavigate();
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -42,3 +42,4 @@ export const ErrorPage = () => {
 		</div>
 	);
 };
+export default ErrorPage;

@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import "./StartPage.css";
 import MainLogo from "./Logo.png";
 
-export const StartPage = () => {
+const StartPage = () => {
 	const navigate = useNavigate();
 
 	return (
@@ -74,3 +74,4 @@ export const StartPage = () => {
 		</>
 	);
 };
+export default StartPage;

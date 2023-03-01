@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { fetchPost } from "../../Api";
 import { RestaurantState } from "../../States/RestaurantState";
 
-export const OwnerLogin = () => {
+const OwnerLogin = () => {
 	const navigate = useNavigate();
 	const [data, setdata] = useState("");
 	let barNames = ["KingFisher", "Eram"];
@@ -83,3 +83,4 @@ export const OwnerLogin = () => {
 		</Container>
 	);
 };
+export default OwnerLogin;

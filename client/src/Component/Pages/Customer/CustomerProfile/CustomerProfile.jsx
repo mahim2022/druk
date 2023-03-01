@@ -2,7 +2,7 @@ import { Container, Paper, Avatar, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-export const CustomerProfile = () => {
+const CustomerProfile = () => {
 	const navigate = useNavigate();
 	const [user, setUser] = useState(JSON.parse(localStorage.getItem("Profile")));
 
@@ -50,3 +50,4 @@ export const CustomerProfile = () => {
 		);
 	}
 };
+export default CustomerProfile;

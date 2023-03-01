@@ -18,7 +18,7 @@ import { BarCard } from "./BarCard";
 import { Loader } from "../../Loader/Loader";
 import vodka from "../MenuPage/vodka.webp";
 
-export const BarAssociation = () => {
+const BarAssociation = () => {
 	const [animation, setAnimation] = useState(false);
 	const [view, setView] = useState(false);
 	const [counter, setCounter] = useContext(DataCounter);
@@ -142,3 +142,5 @@ export const BarAssociation = () => {
 		);
 	}
 };
+
+export default BarAssociation;

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { DataCounter } from "../../States/RestaurantDataUpdateCounter/DataCounter";
 import { Loader } from "../../Loader/Loader";
 
-export const Restaurants = () => {
+const Restaurants = () => {
 	const [animation, setAnimation] = useState(false);
 	let navigate = useNavigate();
 	const [counter, setCounter] = useContext(DataCounter);
@@ -60,3 +60,4 @@ export const Restaurants = () => {
 		</Container>
 	);
 };
+export default Restaurants;

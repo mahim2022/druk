@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { SignIn, SignUp } from "../../Api";
 import { useLocation, useNavigate } from "react-router-dom";
 
-export const CustomerSignIn = () => {
+const CustomerSignIn = () => {
 	let location = useLocation();
 	let navigate = useNavigate();
 	const [change, setchange] = useState(true);
@@ -12,6 +12,7 @@ export const CustomerSignIn = () => {
 		phoneNumber: "",
 		email: "",
 		password: "",
+		demo: false,
 	});
 	const [errorRes, setErrorRes] = useState(0);
 	const handleSwitch = (e) => {
@@ -78,6 +79,7 @@ export const CustomerSignIn = () => {
 		const result = await SignIn({
 			email: "naimulmushfiq@gmail.com",
 			password: "123456789",
+			demo: true,
 		});
 		if (result?.status === 201) {
 			localStorage.setItem("Profile", JSON.stringify(result.data));
@@ -214,3 +216,4 @@ export const CustomerSignIn = () => {
 		</>
 	);
 };
+export default CustomerSignIn;

@@ -21,7 +21,7 @@ import Alert from "@mui/material/Alert";
 import "./MenuPage.css";
 import vodka from "./vodka.webp";
 
-export const MenuPage = () => {
+const MenuPage = () => {
 	const [counter, setCounter] = useState(true);
 	const [animation, setAnimation] = useState(false);
 	////////socketio/////////
@@ -152,3 +152,5 @@ export const MenuPage = () => {
 		</Container>
 	);
 };
+
+export default MenuPage;

@@ -16,7 +16,7 @@ const Item = styled(Paper)(({ theme }) => ({
 	color: theme.palette.text.secondary,
 }));
 
-export const HomePage = () => {
+const HomePage = () => {
 	let navigate = useNavigate();
 	return (
 		<>
@@ -88,3 +88,5 @@ export const HomePage = () => {
 		</>
 	);
 };
+
+export default HomePage;

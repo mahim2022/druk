@@ -6,7 +6,7 @@ import RemoveOutlinedIcon from "@mui/icons-material/RemoveOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { Navigate, useNavigate } from "react-router-dom";
 
-export const CheckOutPage = () => {
+const CheckOutPage = () => {
 	const navigate = useNavigate();
 	const [cartItems, setcartItems] = useContext(CartItemState);
 	const [counter, setcounter] = useState(false);
@@ -149,3 +149,4 @@ export const CheckOutPage = () => {
 			</>
 		);
 };
+export default CheckOutPage;

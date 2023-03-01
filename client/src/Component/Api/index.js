@@ -2,8 +2,9 @@ import axios from "axios";
 import { useEffect } from "react";
 import { DataCounter } from "../States/RestaurantDataUpdateCounter/DataCounter";
 
-const Api = axios.create({ baseURL: "drukbackend-production.up.railway.app" });
-// const Api = axios.create({ baseURL: "http://localhost:5000" });
+const localUrl = "http://localhost:5000";
+const onlineUrl = "https://drukbackend.onrender.com";
+const Api = axios.create({ baseURL: onlineUrl });
 
 // const url = "http://localhost:5000";
 

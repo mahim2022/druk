@@ -9,7 +9,7 @@ import { CartItemState } from "../../States/CartItemState/CartItemState";
 import { order } from "../../Api";
 import ErrorModal from "./ErrorModal";
 
-export const PaymentPage = () => {
+const PaymentPage = () => {
 	const [error, setError] = useState(false);
 	const [cartItems] = useContext(CartItemState);
 	const [total, setTotal] = useState(0);
@@ -180,3 +180,4 @@ export const PaymentPage = () => {
 		</>
 	);
 };
+export default PaymentPage;

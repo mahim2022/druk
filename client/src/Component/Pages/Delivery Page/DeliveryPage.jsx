@@ -6,7 +6,7 @@ import { checkOrderStatus } from "../../Api";
 // import { io } from "socket.io-client";
 import { RejectedOrder } from "./OrderRejected";
 
-export const DeliveryPage = () => {
+const DeliveryPage = () => {
 	const [orderStatus, setOrderStatus] = useState("");
 
 	////////socketio/////////Checking orderStatus dynamically
@@ -98,3 +98,4 @@ export const DeliveryPage = () => {
 		);
 	}
 };
+export default DeliveryPage;

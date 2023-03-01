@@ -3,7 +3,7 @@ import { customerOrders } from "../../Api";
 import { useEffect, useState } from "react";
 import { Loader } from "../../Loader/Loader";
 
-export const CustomerOrder = () => {
+const CustomerOrder = () => {
 	const { result } = JSON.parse(localStorage.getItem("Profile"));
 
 	const [orders, setOrders] = useState(null);
@@ -72,3 +72,4 @@ export const CustomerOrder = () => {
 		);
 	}
 };
+export default CustomerOrder;
